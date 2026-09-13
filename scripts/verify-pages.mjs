@@ -22,6 +22,8 @@ try {
     await page.goto(`${base}#/home`);
     await page.waitForFunction(() => window.MinihompySettings?.status === 'ready');
     await page.evaluate(() => document.fonts.ready);
+    assert(await page.locator('body').evaluate(e => getComputedStyle(e).fontFamily.startsWith('Dotum')));
+    assert.equal(await page.locator('.tab-label').first().evaluate(e => getComputedStyle(e).transform), 'none');
     assert.equal(await page.locator('[data-menu="settings"]').count(),0);
     const menus = await page.locator('[data-menu]').evaluateAll(links => links.map(link => link.dataset.menu));
     for (const menu of menus) {

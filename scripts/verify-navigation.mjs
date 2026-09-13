@@ -58,6 +58,17 @@ try {
   await page.waitForFunction(()=>window.MinihompySettings.status==='ready');await page.evaluate(()=>document.fonts.ready);
   await page.evaluate(()=>{document.querySelector('#admin-auth-toggle').parentElement.textContent='로그아웃';});
   const png=await page.screenshot({path:resolve(out,'reference-home.png')});
-  assert(png.equals(await readFile(new URL('../docs/verification/step7/579x349.png',import.meta.url))));
-  console.log('PASS: 15 DB-backed menu scenarios, contiguous fixed geometry, hidden menus, settings access denied, keyboard/history/reload, HOME reference pixels.');
+  const referencePng=await readFile(new URL('../docs/verification/step7/579x349.png',import.meta.url));
+  // Typography changed intentionally. Keep the original frame/binder baseline.
+  const frameMatches=await page.evaluate(async urls=>{
+    const canvases=[];
+    for(const src of urls){const img=new Image();img.src=src;await img.decode();const canvas=document.createElement('canvas');canvas.width=579;canvas.height=349;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);canvases.push(ctx);}
+    for(const [x,y,w,h] of [[7,20,560,12],[19,32,435,20],[19,310,435,33],[147,70,8,235],[26,50,8,258]]){
+      const a=canvases[0].getImageData(x,y,w,h).data,b=canvases[1].getImageData(x,y,w,h).data;
+      if(a.some((value,i)=>value!==b[i]))return false;
+    }
+    return true;
+  },[png,referencePng].map(buffer=>`data:image/png;base64,${buffer.toString('base64')}`));
+  assert(frameMatches);
+  console.log('PASS: 15 DB-backed menu scenarios, contiguous fixed geometry, hidden menus, settings access denied, keyboard/history/reload, HOME frame/binder reference pixels (text excluded).');
 }finally{await browser.close();}
