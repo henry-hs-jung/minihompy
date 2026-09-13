@@ -1,0 +1,495 @@
+{
+  "browser": "149.0.7827.55",
+  "referenceHomeIdentical": true,
+  "results": [
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "scenario": "current",
+      "ids": [
+        "home",
+        "profile",
+        "diary",
+        "photos",
+        "board",
+        "guestbook"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 108,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 126,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 144,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 162,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "scenario": "three",
+      "ids": [
+        "home",
+        "photos",
+        "guestbook"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 108,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "scenario": "reordered",
+      "ids": [
+        "guestbook",
+        "photos"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "guestbook",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "scenario": "empty",
+      "ids": [
+        "home"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "scenario": "invalid",
+      "ids": [
+        "photos",
+        "home"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scenario": "current",
+      "ids": [
+        "home",
+        "profile",
+        "diary",
+        "photos",
+        "board",
+        "guestbook"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 108,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 126,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 144,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 162,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scenario": "three",
+      "ids": [
+        "home",
+        "photos",
+        "guestbook"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 108,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scenario": "reordered",
+      "ids": [
+        "guestbook",
+        "photos"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "guestbook",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scenario": "empty",
+      "ids": [
+        "home"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scenario": "invalid",
+      "ids": [
+        "photos",
+        "home"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "scenario": "current",
+      "ids": [
+        "home",
+        "profile",
+        "diary",
+        "photos",
+        "board",
+        "guestbook"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 108,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 126,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 144,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 162,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "scenario": "three",
+      "ids": [
+        "home",
+        "photos",
+        "guestbook"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        },
+        {
+          "x": 432,
+          "y": 108,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "scenario": "reordered",
+      "ids": [
+        "guestbook",
+        "photos"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "guestbook",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "scenario": "empty",
+      "ids": [
+        "home"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "scenario": "invalid",
+      "ids": [
+        "photos",
+        "home"
+      ],
+      "geometry": [
+        {
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 17
+        },
+        {
+          "x": 432,
+          "y": 90,
+          "width": 31,
+          "height": 18
+        }
+      ],
+      "fallback": "home",
+      "errors": []
+    }
+  ]
+}

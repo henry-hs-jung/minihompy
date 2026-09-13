@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "width": 1000,
+      "height": 700,
+      "dpr": 1,
+      "geometry": {
+        "canvas": 579,
+        "width": 279,
+        "height": 240,
+        "overflow": false
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 1,
+      "geometry": {
+        "canvas": 579,
+        "width": 279,
+        "height": 240,
+        "overflow": false
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "geometry": {
+        "canvas": 579,
+        "width": 279,
+        "height": 240,
+        "overflow": false
+      },
+      "errors": []
+    }
+  ],
+  "leapYearAndLongContent": true
+}

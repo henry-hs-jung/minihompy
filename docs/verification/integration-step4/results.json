@@ -1,0 +1,1574 @@
+{
+  "browser": "151.0.7922.34",
+  "configHash": "072906bf84d77b287ad3197226e5572255461fb8a022eecb11ff84b053f40b6e",
+  "results": [
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "dpr": 1,
+      "kind": "current",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 10,
+            "width": 75
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 13,
+            "width": 71
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 40,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 4,
+            "width": 22.08001708984375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 3,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "dpr": 1,
+      "kind": "long",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 190
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 72
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": true,
+            "clipped": true,
+            "title": 1201,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": true,
+            "clipped": true,
+            "title": 6009,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 65
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 195
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": true,
+            "clipped": true,
+            "title": 120,
+            "width": 24.84002685546875
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 34.328125
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 37.671875
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 600,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "dpr": 1,
+      "kind": "empty",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 546,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 1,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "dpr": 1,
+      "kind": "invalid",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 51
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 11,
+            "width": 59
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 5,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 553,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 1,
+      "kind": "current",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 10,
+            "width": 75
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 13,
+            "width": 71
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 40,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 4,
+            "width": 22.08001708984375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 3,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 1,
+      "kind": "long",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 190
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 72
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": true,
+            "clipped": true,
+            "title": 1201,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": true,
+            "clipped": true,
+            "title": 6009,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 65
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 195
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": true,
+            "clipped": true,
+            "title": 120,
+            "width": 24.84002685546875
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 34.328125
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 37.671875
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 600,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 1,
+      "kind": "empty",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 546,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 1,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 1,
+      "kind": "invalid",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 51
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 11,
+            "width": 59
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 5,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 553,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "dpr": 1,
+      "kind": "current",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 10,
+            "width": 75
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 13,
+            "width": 71
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 40,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 4,
+            "width": 22.08001708984375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 3,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "dpr": 1,
+      "kind": "long",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 190
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 72
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": true,
+            "clipped": true,
+            "title": 1201,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": true,
+            "clipped": true,
+            "title": 6009,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 65
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 195
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": true,
+            "clipped": true,
+            "title": 120,
+            "width": 24.84002685546875
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 34.328125
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 37.671875
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 600,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "dpr": 1,
+      "kind": "empty",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 546,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 1,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "dpr": 1,
+      "kind": "invalid",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 51
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 11,
+            "width": 59
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 5,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 553,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "dpr": 2,
+      "kind": "current",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 10,
+            "width": 75
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 13,
+            "width": 71
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 40,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 4,
+            "width": 22.08001708984375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 3,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "dpr": 2,
+      "kind": "long",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 190
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 72
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": true,
+            "clipped": true,
+            "title": 1201,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": true,
+            "clipped": true,
+            "title": 6009,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 65
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": true,
+            "clipped": true,
+            "title": 600,
+            "width": 195
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": true,
+            "clipped": true,
+            "title": 120,
+            "width": 24.84002685546875
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 34.328125
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": true,
+            "clipped": true,
+            "title": 22,
+            "width": 37.671875
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 560,
+        "panelRight": 561,
+        "nameTitle": 600,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "dpr": 2,
+      "kind": "empty",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 0
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 546,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 1,
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "dpr": 2,
+      "kind": "invalid",
+      "layout": {
+        "text": [
+          {
+            "selector": ".homepage-title",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 51
+          },
+          {
+            "selector": ".profile-status",
+            "overflow": false,
+            "clipped": false,
+            "title": 11,
+            "width": 59
+          },
+          {
+            "selector": ".profile-name",
+            "overflow": false,
+            "clipped": false,
+            "title": 5,
+            "width": 87
+          },
+          {
+            "selector": ".recent-empty",
+            "overflow": false,
+            "clipped": false,
+            "title": 0,
+            "width": 119
+          },
+          {
+            "selector": ".room-balloon > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 39
+          },
+          {
+            "selector": ".friends-prompt > [data-config]",
+            "overflow": false,
+            "clipped": false,
+            "title": 22,
+            "width": 113
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 1,
+            "width": 5.52001953125
+          },
+          {
+            "selector": ".tab-label",
+            "overflow": false,
+            "clipped": false,
+            "title": 3,
+            "width": 16.55999755859375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 20.84375
+          },
+          {
+            "selector": ".visit-count > span",
+            "overflow": false,
+            "clipped": false,
+            "title": 7,
+            "width": 23.640625
+          }
+        ],
+        "relationshipOverflow": false,
+        "badgeRight": 553,
+        "panelRight": 561,
+        "nameTitle": 0,
+        "actionRight": 408,
+        "promptRight": 408,
+        "lines": 3,
+        "canvasWidth": 579
+      },
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "source": "references/cyworld-master.png",
+  "image": { "width": 579, "height": 349 },
+  "coordinateSystem": "Source-image pixels; top-left origin; bounds [x,y,x+width,y+height); visible bounds, not recovered CSS dimensions.",
+  "defaultTolerancePx": 2,
+  "regions": [
+    { "id": "A01", "name": "Top site bar", "x": 7, "y": 4, "width": 560, "height": 16 },
+    { "id": "A02", "name": "Gray grid backdrop", "x": 7, "y": 20, "width": 560, "height": 323, "tolerancePx": 1 },
+    { "id": "A03", "name": "Cyan outer frame", "x": 19, "y": 32, "width": 435, "height": 293 },
+    { "id": "A04", "name": "Inset stitched perimeter", "x": 29, "y": 42, "width": 414, "height": 274, "tolerancePx": 3 },
+    { "id": "A05", "name": "Pale inner spread", "x": 33, "y": 46, "width": 405, "height": 265 },
+    { "id": "A06", "name": "Left profile panel", "x": 36, "y": 68, "width": 112, "height": 241 },
+    { "id": "A07", "name": "HOME panel", "x": 150, "y": 68, "width": 279, "height": 241 },
+    { "id": "A08", "name": "Right tab stack", "x": 432, "y": 73, "width": 31, "height": 161 },
+    { "id": "A09", "name": "External utility panel", "x": 469, "y": 32, "width": 92, "height": 158 }
+  ],
+  "details": [
+    { "id": "B01", "name": "Visitor counters", "x": 65, "y": 57, "width": 55, "height": 8 },
+    { "id": "B02", "name": "Homepage title", "x": 181, "y": 56, "width": 59, "height": 10 },
+    { "id": "B03", "name": "Header action links", "x": 377, "y": 58, "width": 58, "height": 8 },
+    { "id": "B04", "name": "Profile illustration", "x": 56, "y": 80, "width": 76, "height": 72 },
+    { "id": "B05", "name": "Profile status line", "x": 63, "y": 154, "width": 62, "height": 8 },
+    { "id": "B06", "name": "History and profile footer", "x": 49, "y": 241, "width": 87, "height": 38 },
+    { "id": "B07", "name": "Recent posts heading", "x": 168, "y": 76, "width": 40, "height": 8 },
+    { "id": "B08", "name": "Recent posts and counts", "x": 168, "y": 84, "width": 240, "height": 44 },
+    { "id": "B09", "name": "Miniroom view links", "x": 168, "y": 134, "width": 95, "height": 8 },
+    { "id": "B10", "name": "Miniroom viewport", "x": 168, "y": 142, "width": 240, "height": 75 },
+    { "id": "B11", "name": "Speech balloon", "x": 248, "y": 146, "width": 78, "height": 39 },
+    { "id": "B12", "name": "Miniroom character", "x": 316, "y": 177, "width": 18, "height": 36 },
+    { "id": "B13", "name": "Lower section heading band", "x": 168, "y": 222, "width": 240, "height": 25 },
+    { "id": "B14", "name": "Lower section prompt and action", "x": 171, "y": 250, "width": 237, "height": 12 },
+    { "id": "B15", "name": "HOME scrollbar", "x": 417, "y": 74, "width": 9, "height": 225 },
+    { "id": "B16", "name": "Top binder ring 1", "x": 143, "y": 105, "width": 12, "height": 7 },
+    { "id": "B17", "name": "Top binder ring 2", "x": 143, "y": 122, "width": 12, "height": 7 },
+    { "id": "B18", "name": "Bottom binder ring 1", "x": 143, "y": 250, "width": 12, "height": 7 },
+    { "id": "B19", "name": "Bottom binder ring 2", "x": 143, "y": 267, "width": 12, "height": 7 }
+  ],
+  "tabs": {
+    "x": 432, "width": 31, "approximateBoundaryY": [73, 90, 108, 126, 144, 162, 180, 198, 216, 234],
+    "labels": ["홈", "프로필", "다이어리", "쥬크박스", "사진첩", "갤러리", "게시판", "동영상", "방명록"],
+    "labelStatus": "Visual transcription only; verify against higher-resolution references in step 2."
+  },
+  "colorSamples": [
+    { "name": "Grid background", "sampleBox": [480, 220, 70, 100], "medianRgb": [163, 163, 163], "hex": "#a3a3a3" },
+    { "name": "Cyan frame", "sampleBox": [22, 55, 6, 235], "medianRgb": [172, 210, 221], "hex": "#acd2dd" },
+    { "name": "Profile white", "sampleBox": [45, 175, 90, 55], "medianRgb": [255, 255, 255], "hex": "#ffffff" },
+    { "name": "Lower heading band", "sampleBox": [180, 225, 220, 5], "medianRgb": [245, 245, 245], "hex": "#f5f5f5" },
+    { "name": "Inactive tab region", "sampleBox": [435, 110, 6, 120], "medianRgb": [44, 141, 175], "hex": "#2c8daf" }
+  ]
+}

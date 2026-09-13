@@ -1,0 +1,19 @@
+/references/
+/_site/
+/node_modules/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.log
+.DS_Store
+__pycache__/
+
+# Generated research/capture artifacts stay local; keep the HOME test baseline.
+/docs/measurements/*.html
+/docs/measurements/*.png
+/docs/measurements/*.svg
+/docs/verification/**/*.html
+/docs/verification/**/*.png
+!/docs/verification/step7/579x349.png

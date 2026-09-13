@@ -1,0 +1,29 @@
+[
+  {
+    "width": 1000,
+    "height": 700,
+    "dpr": 1,
+    "errors": [],
+    "pagination": "passed",
+    "detailReturn": "passed",
+    "longText": "passed"
+  },
+  {
+    "width": 375,
+    "height": 812,
+    "dpr": 1,
+    "errors": [],
+    "pagination": "passed",
+    "detailReturn": "passed",
+    "longText": "passed"
+  },
+  {
+    "width": 375,
+    "height": 812,
+    "dpr": 2,
+    "errors": [],
+    "pagination": "passed",
+    "detailReturn": "passed",
+    "longText": "passed"
+  }
+]

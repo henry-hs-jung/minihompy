@@ -1,0 +1,26 @@
+[
+  {
+    "width": 1000,
+    "height": 700,
+    "dpr": 1,
+    "errors": [],
+    "longContent": "passed",
+    "empty": "passed"
+  },
+  {
+    "width": 375,
+    "height": 812,
+    "dpr": 1,
+    "errors": [],
+    "longContent": "passed",
+    "empty": "passed"
+  },
+  {
+    "width": 375,
+    "height": 812,
+    "dpr": 2,
+    "errors": [],
+    "longContent": "passed",
+    "empty": "passed"
+  }
+]

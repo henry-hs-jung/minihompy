@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "status": "Step 6 overlay refinement; original font identity remains unverified",
+  "reference": "references/cyworld-master.png",
+  "measurements": "docs/measurements/master-measurements.json",
+  "detailReference": "references/research/moneytoday-master-related.jpg",
+  "canvas": { "width": 579, "height": 349, "cssPixelsPerReferencePixel": 1, "defaultScale": 1, "responsiveReflow": false, "overflow": "document-scroll" },
+  "layout": { "boxSizing": "border-box", "bodyMargin": 0, "letterSpacing": 0, "frameAxisX": 149, "contentLeft": 168, "contentRight": 408, "gridPeriod": 9, "gridOrigin": [7, 20] },
+  "geometryRefinements": { "A04": { "height": 272 }, "A05": { "height": 264 }, "A06": { "height": 240 }, "A07": { "height": 240 } },
+  "layers": { "backdrop": 0, "frame": 10, "stitch": 11, "spread": 12, "panels": 20, "content": 30, "scrollbar": 35, "tabs": 40, "binder": 50 },
+  "colors": {
+    "canvas": { "value": "#ffffff", "basis": "implementation" },
+    "gridFill": { "value": "#a3a3a3", "basis": "master-sample" },
+    "gridLine": { "value": "#9f9f9f", "basis": "step6-region-comparison" },
+    "frameFill": { "value": "#acd2dd", "basis": "master-sample" },
+    "frameBorder": { "value": "#819b9f", "basis": "provisional" },
+    "stitch": { "value": "#e3f3f5", "basis": "provisional" },
+    "spread": { "value": "#f1f1f0", "basis": "step6-region-comparison" },
+    "panel": { "value": "#ffffff", "basis": "master-sample" },
+    "panelBorder": { "value": "#b8b8b8", "basis": "provisional" },
+    "rule": { "value": "#dedede", "basis": "provisional" },
+    "sectionBand": { "value": "#f5f5f5", "basis": "master-sample" },
+    "bodyText": { "value": "#888888", "basis": "provisional" },
+    "titleText": { "value": "#285370", "basis": "implementation-substitute" },
+    "accentText": { "value": "#319abb", "basis": "implementation-substitute" },
+    "actionText": { "value": "#ee812b", "basis": "provisional" },
+    "tabFill": { "value": "#2c8daf", "basis": "master-sample-region-not-original-css" },
+    "tabBorder": { "value": "#477f94", "basis": "provisional" },
+    "tabText": { "value": "#eaf6f8", "basis": "provisional" },
+    "activeTabText": { "value": "#38535b", "basis": "provisional" },
+    "searchRed": { "value": "#ee3d2c", "basis": "provisional" }
+  },
+  "typography": {
+    "koreanFamily": "'Minihompy Home', Dotum, '돋움', sans-serif",
+    "counterFamily": "Arial, sans-serif",
+    "fontIdentityConfirmed": false,
+    "sizesAre": "Role-specific visual substitutes checked in Step 6, not recovered original styles",
+    "roles": {
+      "body": { "fontSize": 7, "lineHeight": 10, "fontWeight": 400 },
+      "homeCopy": { "fontSize": 6, "lineHeight": 9, "fontWeight": 400, "asset": "assets/fonts/Galmuri11-home.woff2" },
+      "boardLabels": { "fontSize": 6.5, "lineHeight": 13, "fontWeight": 400 },
+      "tab": { "fontSize": 6, "lineHeight": 9, "fontWeight": 400, "fontFamily": "Minihompy Tabs", "scaleX": 0.92, "asset": "assets/fonts/Galmuri11-tabs.woff2", "basis": "Measured substitute, not confirmed original font" },
+      "small": { "fontSize": 6.5, "lineHeight": 8, "fontWeight": 400 },
+      "counter": { "fontSize": 5, "lineHeight": 8, "fontWeight": 400 },
+      "sectionTitle": { "fontSize": 7, "lineHeight": 9, "fontWeight": 700 },
+      "pageTitle": { "fontSize": 8, "lineHeight": 11, "fontWeight": 700 }
+    }
+  },
+  "decoration": { "panelRadius": 6, "outerRadius": 7, "borderWidth": 1, "stitchWidth": 1, "stitchDash": [2, 2], "tabRightRadius": 3, "ringStrokeWidth": 1, "provisional": true },
+  "homeState": { "activeTab": "홈", "activeRoomView": "미니룸", "room": "preparing-empty", "recentPosts": "empty", "friendsComments": "empty", "music": "no-track", "scrollPosition": 0 },
+  "verification": { "comparisonViewport": [579, 349], "deviceScaleFactor": 1, "otherViewports": [[1280, 800], [375, 812]], "majorEdgeTolerance": 2, "stitchTolerance": 3, "acceptance": "geometry and visual inspection; no global pixel score threshold" }
+}

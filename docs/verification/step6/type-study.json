@@ -1,0 +1,293 @@
+{
+  "note": "Isolated size candidates on the pre-final Step 6 layout. MAE is diagnostic, not proof of font identity.",
+  "results": [
+    {
+      "role": "title",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        55,
+        65,
+        12
+      ],
+      "size": 8,
+      "mae": 37.089
+    },
+    {
+      "role": "title",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        55,
+        65,
+        12
+      ],
+      "size": 8.5,
+      "mae": 40.654
+    },
+    {
+      "role": "title",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        55,
+        65,
+        12
+      ],
+      "size": 9,
+      "mae": 44.83
+    },
+    {
+      "role": "utility",
+      "selector": ".utility-panel",
+      "region": [
+        474,
+        35,
+        82,
+        68
+      ],
+      "size": 6,
+      "mae": 13.781
+    },
+    {
+      "role": "utility",
+      "selector": ".utility-panel",
+      "region": [
+        474,
+        35,
+        82,
+        68
+      ],
+      "size": 6.5,
+      "mae": 13.131
+    },
+    {
+      "role": "utility",
+      "selector": ".utility-panel",
+      "region": [
+        474,
+        35,
+        82,
+        68
+      ],
+      "size": 7,
+      "mae": 13.592
+    },
+    {
+      "role": "section",
+      "selector": ".home-panel h2",
+      "region": [
+        168,
+        75,
+        43,
+        9
+      ],
+      "size": 6.5,
+      "mae": 25.419
+    },
+    {
+      "role": "section",
+      "selector": ".home-panel h2",
+      "region": [
+        168,
+        75,
+        43,
+        9
+      ],
+      "size": 7,
+      "mae": 24.837
+    },
+    {
+      "role": "section",
+      "selector": ".home-panel h2",
+      "region": [
+        168,
+        75,
+        43,
+        9
+      ],
+      "size": 7.5,
+      "mae": 42.229
+    },
+    {
+      "role": "profile",
+      "selector": ".profile-status",
+      "region": [
+        62,
+        153,
+        66,
+        10
+      ],
+      "size": 6,
+      "mae": 18.233
+    },
+    {
+      "role": "profile",
+      "selector": ".profile-status",
+      "region": [
+        62,
+        153,
+        66,
+        10
+      ],
+      "size": 6.5,
+      "mae": 25.735
+    },
+    {
+      "role": "profile",
+      "selector": ".profile-status",
+      "region": [
+        62,
+        153,
+        66,
+        10
+      ],
+      "size": 7,
+      "mae": 28.184
+    },
+    {
+      "role": "views",
+      "selector": ".room-views",
+      "region": [
+        168,
+        133,
+        100,
+        9
+      ],
+      "size": 6,
+      "mae": 27.043
+    },
+    {
+      "role": "views",
+      "selector": ".room-views",
+      "region": [
+        168,
+        133,
+        100,
+        9
+      ],
+      "size": 6.5,
+      "mae": 24.896
+    },
+    {
+      "role": "views",
+      "selector": ".room-views",
+      "region": [
+        168,
+        133,
+        100,
+        9
+      ],
+      "size": 7,
+      "mae": 26.473
+    },
+    {
+      "role": "balloon",
+      "selector": ".room-balloon",
+      "region": [
+        262,
+        157,
+        52,
+        13
+      ],
+      "size": 6,
+      "mae": 10.974
+    },
+    {
+      "role": "balloon",
+      "selector": ".room-balloon",
+      "region": [
+        262,
+        157,
+        52,
+        13
+      ],
+      "size": 6.5,
+      "mae": 15.781
+    },
+    {
+      "role": "balloon",
+      "selector": ".room-balloon",
+      "region": [
+        262,
+        157,
+        52,
+        13
+      ],
+      "size": 7,
+      "mae": 17.186
+    },
+    {
+      "role": "friends",
+      "selector": ".friends-prompt",
+      "region": [
+        185,
+        250,
+        120,
+        12
+      ],
+      "size": 6,
+      "mae": 12.641
+    },
+    {
+      "role": "friends",
+      "selector": ".friends-prompt",
+      "region": [
+        185,
+        250,
+        120,
+        12
+      ],
+      "size": 6.5,
+      "mae": 16.186
+    },
+    {
+      "role": "friends",
+      "selector": ".friends-prompt",
+      "region": [
+        185,
+        250,
+        120,
+        12
+      ],
+      "size": 7,
+      "mae": 18.199
+    },
+    {
+      "role": "top",
+      "selector": ".site-bar",
+      "region": [
+        246,
+        6,
+        311,
+        12
+      ],
+      "size": 6,
+      "mae": 22.018
+    },
+    {
+      "role": "top",
+      "selector": ".site-bar",
+      "region": [
+        246,
+        6,
+        311,
+        12
+      ],
+      "size": 6.5,
+      "mae": 21.412
+    },
+    {
+      "role": "top",
+      "selector": ".site-bar",
+      "region": [
+        246,
+        6,
+        311,
+        12
+      ],
+      "size": 7,
+      "mae": 22.966
+    }
+  ]
+}

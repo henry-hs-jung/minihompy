@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-13T14:06:58.782Z",
+  "tables": {
+    "minihompy_settings": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "minihompy_profile": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "board_folders": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "board_posts": {
+      "publicRead": true,
+      "hasRow": false
+    },
+    "photo_folders": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "photo_posts": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "diary_folders": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "diary_entries": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "guestbook_posts": {
+      "publicRead": true,
+      "hasRow": true
+    },
+    "post_comments": {
+      "publicRead": true,
+      "hasRow": true
+    }
+  },
+  "profileRevision": 2,
+  "identity": {
+    "role": "reader",
+    "userId": null
+  },
+  "blocked": [],
+  "errors": [],
+  "writes": 0
+}

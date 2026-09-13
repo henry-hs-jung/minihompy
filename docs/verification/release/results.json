@@ -1,0 +1,138 @@
+{
+  "checkedAt": "2026-09-13T14:10:09.472Z",
+  "results": [
+    {
+      "name": "identity",
+      "passed": true,
+      "seconds": 0.022,
+      "stdout": "PASS: nickname, persistence failure, lazy anonymous identity without CAPTCHA, deduplication, verified admin lookup, fail closed.\n",
+      "stderr": ""
+    },
+    {
+      "name": "board-db",
+      "passed": true,
+      "seconds": 1.165,
+      "stdout": "PASS: board migrations including retry grant; public reads; admin writes; ownership; 16 rejected operations; unique retry ID; divider FK; safe folder deletion. Local PGlite, not hosted Supabase.\n",
+      "stderr": ""
+    },
+    {
+      "name": "settings-db",
+      "passed": true,
+      "seconds": 1.205,
+      "stdout": "PASS: settings migration, seed, public read, admin-only update, immutable revision, CAS conflict, invalid fields/menus, reserved settings tab, empty menu set. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "photos-db",
+      "passed": true,
+      "seconds": 1.123,
+      "stdout": "PASS: photo migration, public reads, admin CRUD, content validation, revisions, FK protection, Storage upload/delete RLS. Local emulated Storage tables, not hosted writes.\n",
+      "stderr": ""
+    },
+    {
+      "name": "diary-db",
+      "passed": true,
+      "seconds": 2.203,
+      "stdout": "PASS: diary migration, public reads/calendar, admin writes, revisions/ownership, date/time/weather/body constraints, FK, >1000-entry markers. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "guestbook-db",
+      "passed": true,
+      "seconds": 1.122,
+      "stdout": "PASS: guestbook migration, anonymous denial, author/admin/public visibility, ownership, immutable metadata, one-way privacy, revisions, rate limits including deletion and reset. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "comments-db",
+      "passed": true,
+      "seconds": 1.191,
+      "stdout": "PASS: actual parent migrations + comment RLS for all four targets, inherited privacy including former author, edit/delete ownership, immutable metadata/parent, revisions, FK cascades, rate limits. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile-db",
+      "passed": true,
+      "seconds": 1.121,
+      "stdout": "PASS: profile seed, public read, admin-only updates, CAS, validation, immutable metadata, image policies and published image protection. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "backend",
+      "passed": true,
+      "seconds": 0.393,
+      "stdout": "PASS: actual vendored SDK, isolated sessions, client reuse, reader identity, settings query only, no user creation.\n",
+      "stderr": ""
+    },
+    {
+      "name": "admin",
+      "passed": true,
+      "seconds": 1.101,
+      "stdout": "PASS: admin UI desktop/mobile; invalid/non-admin/network denied; verified admin; local logout; password cleared; Escape. Auth calls mocked.\n",
+      "stderr": ""
+    },
+    {
+      "name": "settings",
+      "passed": true,
+      "seconds": 17.111,
+      "stdout": "PASS: DB settings load/save/error/conflict; administrator-only immutable last tab; 10-tab geometry; all hidden; logout/direct URL; no fallback; desktop/mobile. API mocked.\n",
+      "stderr": ""
+    },
+    {
+      "name": "board-writing",
+      "passed": true,
+      "seconds": 18.79,
+      "stdout": "PASS: real SDK with intercepted API; create/edit/move/delete, conflicts, denied writes, draft retention, auth change, pagination, error recovery, desktop/mobile. No hosted writes.\n",
+      "stderr": ""
+    },
+    {
+      "name": "photos-writing",
+      "passed": true,
+      "seconds": 18.057,
+      "stdout": "PASS: inline local images, text/image order, no early upload, save/edit/delete, retained drafts, failed upload/write, conflict, logout, invalid file, recovery, desktop/mobile. Mock API; real SDK and Quill.\n",
+      "stderr": ""
+    },
+    {
+      "name": "diary-writing",
+      "passed": true,
+      "seconds": 18.839,
+      "stdout": "PASS: diary create/edit/date+folder move/delete, calendar/leap year/months, drafts, denied/lost response retry, conflict, pagination, logout, errors; desktop/mobile, actual SDK with mock API.\n",
+      "stderr": ""
+    },
+    {
+      "name": "guestbook-writing",
+      "passed": true,
+      "seconds": 17.851,
+      "stdout": "PASS: lazy anonymous identity without CAPTCHA, remembered nickname, private visibility, own edit/delete, admin private-only moderation, conflict, denied/lost writes, drafts, logout/read failure clears private DOM; desktop/mobile. Mock auth/API, actual SDK.\n",
+      "stderr": ""
+    },
+    {
+      "name": "comments-writing",
+      "passed": true,
+      "seconds": 19.944,
+      "stdout": "PASS: comments on all four real views, shared nickname/one anonymous identity, no CAPTCHA, drafts, failed/lost writes, retry dedup, ownership/edit/delete/conflicts, private parent access loss, admin moderation, pagination, read errors, desktop/mobile. Mock API/Auth, actual SDK.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile-writing",
+      "passed": true,
+      "seconds": 19.121,
+      "stdout": "PASS: profile edit, upload preview/retry, save response loss, CAS, drafts, inheritance, removal, permission loss, read failure/retry, empty sections, desktop/mobile. Mock API with real SDK.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile",
+      "passed": true,
+      "seconds": 2.623,
+      "stdout": "PASS: profile introduction, empty sections/groups, keyboard, navigation, image, long text, desktop/mobile.\n",
+      "stderr": ""
+    },
+    {
+      "name": "navigation",
+      "passed": true,
+      "seconds": 5.768,
+      "stdout": "PASS: 15 DB-backed menu scenarios, contiguous fixed geometry, hidden menus, settings access denied, keyboard/history/reload, HOME reference pixels.\n",
+      "stderr": ""
+    }
+  ]
+}

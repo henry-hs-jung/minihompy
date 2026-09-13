@@ -1,0 +1,68 @@
+{
+  "browser": "151.0.7922.34",
+  "modifiedConfig": {
+    "page": {
+      "title": "민수의 미니홈피",
+      "browserTitle": "민수의 공간"
+    },
+    "profile": {
+      "name": "민수",
+      "introduction": "오늘도 반가워요.",
+      "detail": ""
+    },
+    "home": {
+      "today": 3,
+      "total": 12,
+      "recentEmptyLines": [
+        "새로운 소식",
+        "곧 만나요"
+      ],
+      "roomMessage": "잠시 쉬는 중",
+      "friendsMessage": "반가운 인사를 남겨주세요."
+    },
+    "menus": [
+      {
+        "id": "guestbook",
+        "label": "방명록",
+        "visible": false
+      },
+      {
+        "id": "board",
+        "label": "게시판",
+        "visible": true
+      },
+      {
+        "id": "photos",
+        "label": "사진첩",
+        "visible": true
+      },
+      {
+        "id": "diary",
+        "label": "다이어리",
+        "visible": true
+      },
+      {
+        "id": "profile",
+        "label": "프로필",
+        "visible": true
+      },
+      {
+        "id": "home",
+        "label": "홈",
+        "visible": true
+      }
+    ]
+  },
+  "tests": [
+    "text binding",
+    "shared profile name",
+    "empty string",
+    "line breaks",
+    "literal HTML text",
+    "invalid value retains current text",
+    "extended Korean font",
+    "no external requests",
+    "menu filtering/order"
+  ],
+  "failures": []
+}

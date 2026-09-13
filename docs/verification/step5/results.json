@@ -1,0 +1,525 @@
+{
+  "browser": "151.0.7922.34",
+  "deviceScaleFactor": 1,
+  "results": [
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "geometry": [
+        {
+          "id": "A01",
+          "x": 7,
+          "y": 4,
+          "width": 560,
+          "height": 16
+        },
+        {
+          "id": "A02",
+          "x": 7,
+          "y": 20,
+          "width": 560,
+          "height": 323
+        },
+        {
+          "id": "A03",
+          "x": 19,
+          "y": 32,
+          "width": 435,
+          "height": 293
+        },
+        {
+          "id": "A04",
+          "x": 29,
+          "y": 42,
+          "width": 414,
+          "height": 274
+        },
+        {
+          "id": "A05",
+          "x": 33,
+          "y": 46,
+          "width": 405,
+          "height": 265
+        },
+        {
+          "id": "A06",
+          "x": 36,
+          "y": 68,
+          "width": 112,
+          "height": 241
+        },
+        {
+          "id": "A07",
+          "x": 150,
+          "y": 68,
+          "width": 279,
+          "height": 241
+        },
+        {
+          "id": "B15",
+          "x": 417,
+          "y": 74,
+          "width": 9,
+          "height": 225
+        },
+        {
+          "id": "A08",
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 161
+        },
+        {
+          "id": "B16",
+          "x": 143,
+          "y": 105,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B17",
+          "x": 143,
+          "y": 122,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B18",
+          "x": 143,
+          "y": 250,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B19",
+          "x": 143,
+          "y": 267,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "A09",
+          "x": 469,
+          "y": 32,
+          "width": 92,
+          "height": 158
+        }
+      ],
+      "tabs": [
+        "홈",
+        "프로필",
+        "다이어리",
+        "쥬크박스",
+        "사진첩",
+        "갤러리",
+        "게시판",
+        "동영상",
+        "방명록"
+      ],
+      "fonts": [
+        {
+          "familyName": "Galmuri11 Regular",
+          "postScriptName": "Galmuri11-Regular",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ],
+      "bodyFonts": [
+        {
+          "familyName": "Galmuri11 Regular",
+          "postScriptName": "Galmuri11-Regular",
+          "isCustomFont": true,
+          "glyphCount": 11
+        }
+      ],
+      "assets": [
+        {
+          "label": "손을 흔드는 줄무늬 셔츠의 프로필 캐릭터",
+          "x": 56,
+          "y": 80,
+          "width": 76,
+          "height": 72,
+          "coloredPixels": 1503,
+          "naturalWidth": 579
+        },
+        {
+          "label": "주황색 머리의 미니미",
+          "x": 316,
+          "y": 177,
+          "width": 18,
+          "height": 36,
+          "coloredPixels": 344,
+          "naturalWidth": 579
+        },
+        {
+          "label": "별 그림의 Welcome 추천 배너",
+          "x": 476,
+          "y": 147,
+          "width": 38,
+          "height": 38,
+          "coloredPixels": 405,
+          "naturalWidth": 579
+        },
+        {
+          "label": "만화 캐릭터 추천 배너",
+          "x": 516,
+          "y": 147,
+          "width": 38,
+          "height": 38,
+          "coloredPixels": 726,
+          "naturalWidth": 579
+        }
+      ],
+      "horizontalScroll": 0,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "geometry": [
+        {
+          "id": "A01",
+          "x": 7,
+          "y": 4,
+          "width": 560,
+          "height": 16
+        },
+        {
+          "id": "A02",
+          "x": 7,
+          "y": 20,
+          "width": 560,
+          "height": 323
+        },
+        {
+          "id": "A03",
+          "x": 19,
+          "y": 32,
+          "width": 435,
+          "height": 293
+        },
+        {
+          "id": "A04",
+          "x": 29,
+          "y": 42,
+          "width": 414,
+          "height": 274
+        },
+        {
+          "id": "A05",
+          "x": 33,
+          "y": 46,
+          "width": 405,
+          "height": 265
+        },
+        {
+          "id": "A06",
+          "x": 36,
+          "y": 68,
+          "width": 112,
+          "height": 241
+        },
+        {
+          "id": "A07",
+          "x": 150,
+          "y": 68,
+          "width": 279,
+          "height": 241
+        },
+        {
+          "id": "B15",
+          "x": 417,
+          "y": 74,
+          "width": 9,
+          "height": 225
+        },
+        {
+          "id": "A08",
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 161
+        },
+        {
+          "id": "B16",
+          "x": 143,
+          "y": 105,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B17",
+          "x": 143,
+          "y": 122,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B18",
+          "x": 143,
+          "y": 250,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B19",
+          "x": 143,
+          "y": 267,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "A09",
+          "x": 469,
+          "y": 32,
+          "width": 92,
+          "height": 158
+        }
+      ],
+      "tabs": [
+        "홈",
+        "프로필",
+        "다이어리",
+        "쥬크박스",
+        "사진첩",
+        "갤러리",
+        "게시판",
+        "동영상",
+        "방명록"
+      ],
+      "fonts": [
+        {
+          "familyName": "Galmuri11 Regular",
+          "postScriptName": "Galmuri11-Regular",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ],
+      "bodyFonts": [
+        {
+          "familyName": "Galmuri11 Regular",
+          "postScriptName": "Galmuri11-Regular",
+          "isCustomFont": true,
+          "glyphCount": 11
+        }
+      ],
+      "assets": [
+        {
+          "label": "손을 흔드는 줄무늬 셔츠의 프로필 캐릭터",
+          "x": 56,
+          "y": 80,
+          "width": 76,
+          "height": 72,
+          "coloredPixels": 1503,
+          "naturalWidth": 579
+        },
+        {
+          "label": "주황색 머리의 미니미",
+          "x": 316,
+          "y": 177,
+          "width": 18,
+          "height": 36,
+          "coloredPixels": 344,
+          "naturalWidth": 579
+        },
+        {
+          "label": "별 그림의 Welcome 추천 배너",
+          "x": 476,
+          "y": 147,
+          "width": 38,
+          "height": 38,
+          "coloredPixels": 405,
+          "naturalWidth": 579
+        },
+        {
+          "label": "만화 캐릭터 추천 배너",
+          "x": 516,
+          "y": 147,
+          "width": 38,
+          "height": 38,
+          "coloredPixels": 726,
+          "naturalWidth": 579
+        }
+      ],
+      "horizontalScroll": 0,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "geometry": [
+        {
+          "id": "A01",
+          "x": 7,
+          "y": 4,
+          "width": 560,
+          "height": 16
+        },
+        {
+          "id": "A02",
+          "x": 7,
+          "y": 20,
+          "width": 560,
+          "height": 323
+        },
+        {
+          "id": "A03",
+          "x": 19,
+          "y": 32,
+          "width": 435,
+          "height": 293
+        },
+        {
+          "id": "A04",
+          "x": 29,
+          "y": 42,
+          "width": 414,
+          "height": 274
+        },
+        {
+          "id": "A05",
+          "x": 33,
+          "y": 46,
+          "width": 405,
+          "height": 265
+        },
+        {
+          "id": "A06",
+          "x": 36,
+          "y": 68,
+          "width": 112,
+          "height": 241
+        },
+        {
+          "id": "A07",
+          "x": 150,
+          "y": 68,
+          "width": 279,
+          "height": 241
+        },
+        {
+          "id": "B15",
+          "x": 417,
+          "y": 74,
+          "width": 9,
+          "height": 225
+        },
+        {
+          "id": "A08",
+          "x": 432,
+          "y": 73,
+          "width": 31,
+          "height": 161
+        },
+        {
+          "id": "B16",
+          "x": 143,
+          "y": 105,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B17",
+          "x": 143,
+          "y": 122,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B18",
+          "x": 143,
+          "y": 250,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "B19",
+          "x": 143,
+          "y": 267,
+          "width": 12,
+          "height": 7
+        },
+        {
+          "id": "A09",
+          "x": 469,
+          "y": 32,
+          "width": 92,
+          "height": 158
+        }
+      ],
+      "tabs": [
+        "홈",
+        "프로필",
+        "다이어리",
+        "쥬크박스",
+        "사진첩",
+        "갤러리",
+        "게시판",
+        "동영상",
+        "방명록"
+      ],
+      "fonts": [
+        {
+          "familyName": "Galmuri11 Regular",
+          "postScriptName": "Galmuri11-Regular",
+          "isCustomFont": true,
+          "glyphCount": 1
+        }
+      ],
+      "bodyFonts": [
+        {
+          "familyName": "Galmuri11 Regular",
+          "postScriptName": "Galmuri11-Regular",
+          "isCustomFont": true,
+          "glyphCount": 11
+        }
+      ],
+      "assets": [
+        {
+          "label": "손을 흔드는 줄무늬 셔츠의 프로필 캐릭터",
+          "x": 56,
+          "y": 80,
+          "width": 76,
+          "height": 72,
+          "coloredPixels": 1503,
+          "naturalWidth": 579
+        },
+        {
+          "label": "주황색 머리의 미니미",
+          "x": 316,
+          "y": 177,
+          "width": 18,
+          "height": 36,
+          "coloredPixels": 344,
+          "naturalWidth": 579
+        },
+        {
+          "label": "별 그림의 Welcome 추천 배너",
+          "x": 476,
+          "y": 147,
+          "width": 38,
+          "height": 38,
+          "coloredPixels": 405,
+          "naturalWidth": 579
+        },
+        {
+          "label": "만화 캐릭터 추천 배너",
+          "x": 516,
+          "y": 147,
+          "width": 38,
+          "height": 38,
+          "coloredPixels": 726,
+          "naturalWidth": 579
+        }
+      ],
+      "horizontalScroll": 204,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "browser": "151.0.7922.34",
+  "deviceScaleFactor": 1,
+  "configHash": "ece99d07e1b9553c231cb4629e3a3b68d5643960ce2c5098b40ffc40e9fad02c",
+  "results": [
+    {
+      "viewport": {
+        "width": 579,
+        "height": 349
+      },
+      "unchangedHome": true,
+      "unchangedReferenceHome": true,
+      "repaintPixels": [
+        {
+          "x": 23,
+          "y": 32,
+          "delta": 2
+        },
+        {
+          "x": 24,
+          "y": 32,
+          "delta": 3
+        },
+        {
+          "x": 25,
+          "y": 32,
+          "delta": 1
+        },
+        {
+          "x": 151,
+          "y": 33,
+          "delta": 1
+        },
+        {
+          "x": 48,
+          "y": 257,
+          "delta": 25
+        },
+        {
+          "x": 48,
+          "y": 259,
+          "delta": 5
+        }
+      ],
+      "views": [
+        "profile",
+        "diary",
+        "music",
+        "photos",
+        "gallery",
+        "board",
+        "video",
+        "guestbook",
+        "home"
+      ],
+      "independentRegions": {
+        "content": [
+          "왼쪽",
+          "본문"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      "horizontalScroll": 0,
+      "existingTextOverflow": [
+        "relationship-slot"
+      ],
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "unchangedHome": true,
+      "unchangedReferenceHome": true,
+      "repaintPixels": [
+        {
+          "x": 23,
+          "y": 32,
+          "delta": 2
+        },
+        {
+          "x": 24,
+          "y": 32,
+          "delta": 3
+        },
+        {
+          "x": 25,
+          "y": 32,
+          "delta": 1
+        },
+        {
+          "x": 151,
+          "y": 33,
+          "delta": 1
+        },
+        {
+          "x": 48,
+          "y": 257,
+          "delta": 25
+        },
+        {
+          "x": 48,
+          "y": 259,
+          "delta": 5
+        }
+      ],
+      "views": [
+        "profile",
+        "diary",
+        "music",
+        "photos",
+        "gallery",
+        "board",
+        "video",
+        "guestbook",
+        "home"
+      ],
+      "independentRegions": {
+        "content": [
+          "왼쪽",
+          "본문"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      "horizontalScroll": 0,
+      "existingTextOverflow": [
+        "relationship-slot"
+      ],
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "unchangedHome": true,
+      "unchangedReferenceHome": true,
+      "repaintPixels": [
+        {
+          "x": 23,
+          "y": 32,
+          "delta": 2
+        },
+        {
+          "x": 24,
+          "y": 32,
+          "delta": 3
+        },
+        {
+          "x": 25,
+          "y": 32,
+          "delta": 1
+        },
+        {
+          "x": 151,
+          "y": 33,
+          "delta": 1
+        },
+        {
+          "x": 48,
+          "y": 257,
+          "delta": 25
+        },
+        {
+          "x": 48,
+          "y": 259,
+          "delta": 5
+        }
+      ],
+      "views": [
+        "profile",
+        "diary",
+        "music",
+        "photos",
+        "gallery",
+        "board",
+        "video",
+        "guestbook",
+        "home"
+      ],
+      "independentRegions": {
+        "content": [
+          "왼쪽",
+          "본문"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      "horizontalScroll": 204,
+      "existingTextOverflow": [
+        "relationship-slot"
+      ],
+      "errors": []
+    }
+  ]
+}

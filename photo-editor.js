@@ -1,0 +1,189 @@
+(() => {
+  'use strict';
+  const repository = window.MinihompyPhotosRepository;
+  const Image = window.Quill.import('formats/image');
+  const previews = new Map();
+  class LocalImage extends Image {
+    static sanitize(value) { return previews.has(value) ? value : super.sanitize(value); }
+  }
+  window.Quill.register(LocalImage, true);
+  const Delta = window.Quill.import('delta');
+  let draft, quill, root, message, busy = false, dirty = false, selection = 0;
+  let generation = 0;
+  const node = (tag, className, text) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+  const admin = () => window.MinihompyAdmin?.state.role === 'admin';
+  function notify(text) { if (message) message.textContent = text; }
+  function reset() {
+    generation++;
+    for (const src of previews.keys()) URL.revokeObjectURL(src);
+    previews.clear();
+    quill?.disable();
+    draft = null; quill = null; dirty = false; busy = false;
+    root?.replaceChildren();
+  }
+  function capture() { if (draft && quill) draft.delta = quill.getContents(); }
+  function blocks() {
+    const result = [];
+    for (const op of draft.delta.ops) {
+      if (typeof op.insert === 'string') result.push({ type: 'text', text: op.insert });
+      else if (op.insert?.image) {
+        const local = previews.get(op.insert.image);
+        const path = local?.path || draft.existing.get(op.insert.image);
+        if (!path) throw new Error('외부 이미지 대신 사진 파일을 선택해 주세요.');
+        result.push({ type: 'image', path });
+      } else throw new Error('지원하지 않는 본문입니다.');
+    }
+    return result;
+  }
+  function lock(value) {
+    busy = value;
+    if (root) for (const control of root.querySelectorAll('input,select,button')) control.disabled = value;
+    quill?.enable(!value && admin());
+  }
+  async function addFiles(files) {
+    if (!draft || busy || !admin()) return;
+    const token = generation;
+    const editor = quill;
+    selection = editor.getSelection()?.index ?? selection;
+    lock(true);
+    try {
+      const count = editor.getContents().ops.filter(op => op.insert?.image).length;
+      if (count + files.length > 20) throw new Error('사진은 최대 20장까지 넣을 수 있습니다.');
+      for (const file of files) {
+        const extension = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif' }[file.type];
+        if (!extension || !file.size || file.size > 6 * 1024 * 1024) throw new Error('JPG, PNG, WEBP, GIF 파일만 선택할 수 있습니다. 한 장당 최대 6MB입니다.');
+        const src = URL.createObjectURL(file);
+        try {
+          const image = new window.Image(); image.src = src; await image.decode();
+        } catch { URL.revokeObjectURL(src); throw new Error('열 수 없는 이미지 파일입니다.'); }
+        if (generation !== token || !admin()) { URL.revokeObjectURL(src); return; }
+        previews.set(src, { file, path: `${draft.id}/${crypto.randomUUID()}.${extension}`, uploaded: false });
+        const index = Math.min(selection, editor.getLength() - 1);
+        editor.insertEmbed(index, 'image', src, 'api');
+        editor.insertText(index + 1, '\n', 'api');
+        selection = index + 2;
+        editor.setSelection(selection, 0, 'silent');
+        dirty = true;
+      }
+      notify('');
+    } catch (error) { notify(error.message); }
+    finally { if (generation === token) { capture(); lock(false); } }
+  }
+  window.MinihompyPhotoEditor = {
+    get active() { return Boolean(draft); },
+    get busy() { return busy; },
+    start(post, folder) {
+      if (!admin() || busy) return false;
+      if (draft && dirty && !confirm('작성 중인 내용을 버릴까요?')) return false;
+      reset();
+      const existing = new Map();
+      const ops = (post?.body || [{ type: 'text', text: '\n' }]).map(block => {
+        if (block.type === 'text') return { insert: block.text };
+        const src = repository.url(block.path); existing.set(src, block.path);
+        return { insert: { image: src } };
+      });
+      draft = { id: post?.id || crypto.randomUUID(), revision: post?.revision, folder_id: post?.folder_id || folder,
+        title: post?.title || '', delta: { ops }, existing, originalPaths: [...existing.values()] };
+      selection = 0;
+      return true;
+    },
+    render(folders, done) {
+      capture();
+      root = node('form', 'photo-editor');
+      if (!draft || !admin()) return root;
+      const title = node('input', 'photo-editor-title');
+      title.value = draft.title; title.maxLength = 120; title.required = true; title.setAttribute('aria-label', '사진글 제목');
+      title.addEventListener('input', () => { draft.title = title.value; dirty = true; });
+      const folder = node('select', 'photo-editor-folder'); folder.setAttribute('aria-label', '사진글 폴더');
+      for (const item of folders.filter(f => f.kind === 'folder')) {
+        const option = node('option', '', item.label); option.value = item.id; folder.append(option);
+      }
+      folder.value = draft.folder_id;
+      folder.addEventListener('change', () => { draft.folder_id = folder.value; dirty = true; });
+      const titleLabel = node('label', '', '제목'); titleLabel.append(title);
+      const folderLabel = node('label', '', '폴더'); folderLabel.append(folder);
+      const toolbar = node('div', 'photo-editor-toolbar');
+      const photo = node('button', '', '사진'); photo.type = 'button'; photo.title = '본문에 사진 넣기';
+      const file = node('input', 'photo-editor-file'); file.type = 'file'; file.multiple = true;
+      file.accept = 'image/jpeg,image/png,image/webp,image/gif'; file.hidden = true; file.setAttribute('aria-label', '사진 파일');
+      photo.addEventListener('pointerdown', () => { selection = quill.getSelection()?.index ?? selection; });
+      photo.addEventListener('click', () => { selection = quill.getSelection()?.index ?? selection; file.click(); });
+      file.addEventListener('change', () => { const files = [...file.files]; file.value = ''; addFiles(files); });
+      toolbar.append(photo, file);
+      const content = node('div', 'photo-editor-content');
+      const actions = node('div', 'photo-editor-actions');
+      const save = node('button', 'photo-save', '저장'); save.type = 'submit';
+      const cancel = node('button', 'photo-cancel', '취소'); cancel.type = 'button';
+      cancel.addEventListener('click', async () => {
+        if (busy || (dirty && !confirm('작성 중인 내용을 버릴까요?'))) return;
+        const token = generation;
+        lock(true);
+        let warning = '';
+        try { await repository.cleanup([...previews.values()].filter(p => p.uploaded).map(p => p.path)); }
+        catch { warning = '작성을 취소했습니다. 업로드된 미사용 파일은 저장소에서 정리가 필요할 수 있습니다.'; }
+        if (token !== generation) return;
+        reset(); done(null, warning);
+      });
+      message = node('p', 'photo-editor-message'); message.setAttribute('role', 'status');
+      actions.append(save, cancel); root.append(node('h3', 'photo-post-title', draft.revision ? '사진 수정' : '사진 올리기'), titleLabel, folderLabel, toolbar, content, message, actions);
+      quill = new window.Quill(content, { formats: ['image'], modules: { toolbar: false } });
+      quill.clipboard.addMatcher('IMG', () => new Delta());
+      quill.setContents(draft.delta, 'silent');
+      quill.root.setAttribute('aria-label', '사진글 본문');
+      quill.root.setAttribute('role', 'textbox'); quill.root.setAttribute('aria-multiline', 'true');
+      quill.on('text-change', () => { if (!draft) return; dirty = true; capture(); });
+      quill.on('editor-change', (event, range) => { if (event === 'selection-change' && range) selection = range.index; });
+      quill.root.addEventListener('paste', event => {
+        if (!event.clipboardData.files.length) return;
+        event.preventDefault(); event.stopImmediatePropagation(); addFiles([...event.clipboardData.files]);
+      }, true);
+      quill.root.addEventListener('drop', event => {
+        event.preventDefault(); event.stopImmediatePropagation();
+        if (event.dataTransfer.files.length) addFiles([...event.dataTransfer.files]);
+      }, true);
+      quill.root.addEventListener('dragover', event => event.preventDefault());
+      lock(busy);
+      root.addEventListener('submit', async event => {
+        event.preventDefault(); if (busy || !admin()) return;
+        capture(); const token = generation;
+        let stage = '본문 확인';
+        try {
+          const payload = { ...draft, body: blocks() }; repository.validate(payload);
+          lock(true); notify('사진을 저장하고 있습니다.');
+          const pending = [...previews.values()].filter(local => payload.body.some(block => block.path === local.path) && !local.uploaded);
+          for (const [index, local] of pending.entries()) {
+            stage = `사진 업로드 (${index + 1}/${pending.length})`;
+            notify(`${stage} 중입니다.`);
+            await repository.upload(local.path, local.file); local.uploaded = true;
+            if (token !== generation || !admin()) return;
+          }
+          stage = '글 저장';
+          notify('글을 저장하고 있습니다.');
+          const saved = await repository.save(payload);
+          if (token !== generation || !admin()) return;
+          const used = new Set(saved.body.filter(b => b.type === 'image').map(b => b.path));
+          const unused = [...draft.originalPaths, ...[...previews.values()].filter(p => p.uploaded).map(p => p.path)].filter(path => !used.has(path));
+          let warning = '';
+          try { await repository.cleanup(unused); } catch { warning = '글은 저장했지만 사용하지 않는 이미지 정리는 완료하지 못했습니다.'; }
+          if (token !== generation) return;
+          reset(); done(saved, warning);
+        } catch (error) {
+          if (token === generation) {
+            const reason = error.message || '알 수 없는 오류';
+            const network = /failed to fetch|networkerror|load failed/i.test(reason);
+            notify(`${stage} 실패: ${reason}\n${network ? '서버와 통신하지 못했습니다. ' : ''}작성 내용은 유지됩니다.`);
+          }
+        }
+        finally { if (token === generation) lock(false); }
+      });
+      return root;
+    },
+  };
+  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
+  window.addEventListener('minihompy:identity', () => { if (!admin()) reset(); });
+})();

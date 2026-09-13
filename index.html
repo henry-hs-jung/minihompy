@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko" data-settings-status="loading">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-config="page.browserTitle">미니홈피</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="visitor-identity.js" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <script src="assets/vendor/supabase-2.116.0.js" defer></script>
+  <script src="supabase-client.js" defer></script>
+  <script src="visitor-session.js" defer></script>
+  <script src="comments-repository.js" defer></script>
+  <script src="comments.js" defer></script>
+  <script src="content.js" defer></script>
+  <script src="views/index.js" defer></script>
+  <script src="views/home.js" defer></script>
+  <script src="profile-data.js" defer></script>
+  <script src="views/profile.js" defer></script>
+  <script src="assets/vendor/quill-2.0.3.js" defer></script>
+  <script src="photos-repository.js" defer></script>
+  <script src="photo-editor.js" defer></script>
+  <script src="views/photos.js" defer></script>
+  <script src="diary-repository.js" defer></script>
+  <script src="views/diary.js" defer></script>
+  <script src="guestbook-repository.js" defer></script>
+  <script src="views/guestbook.js" defer></script>
+  <script src="board-repository.js" defer></script>
+  <script src="views/board.js" defer></script>
+  <script src="views/settings.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="admin-auth.js" defer></script>
+</head>
+<body>
+  <main class="minihompy" aria-label="미니홈피">
+    <header class="site-bar" data-region="A01">
+      <div class="search">
+        <input aria-label="검색어" value="현빈 그남자" disabled>
+        <button type="button" disabled>검색</button>
+      </div>
+      <div class="site-links" aria-label="사이트 메뉴">
+        <span>메인</span><span>내 미니홈피</span>
+        <span class="history-links">◀ 주　 › 정　 › 정</span>
+        <span>내모아보기<span class="tiny-orange">▴</span></span>
+        <span>바로가기 ▴</span><span>랜덤</span><span><button id="admin-auth-toggle" type="button" title="관리자 로그인">로그인</button></span>
+      </div>
+    </header>
+
+    <div class="grid-backdrop" data-region="A02" aria-hidden="true"></div>
+    <svg class="notebook-frame" data-region="A03" viewBox="0 0 435 293" aria-hidden="true">
+      <path class="frame-outline" d="M7.5 .5 H120 Q125 .5 130 2.5 Q135 .5 140 .5 H427.5 Q434.5 .5 434.5 7.5 V285.5 Q434.5 292.5 427.5 292.5 H140 Q135 292.5 130 290.5 Q125 292.5 120 292.5 H7.5 Q.5 292.5 .5 285.5 V7.5 Q.5 .5 7.5 .5 Z"/>
+      <path class="frame-inset" d="M20 12 H120 Q125 12 130 14 Q135 12 140 12 H414 Q422 12 422 20 V273 Q422 281 414 281 H140 Q135 281 130 279 Q125 281 120 281 H20 Q12 281 12 273 V20 Q12 12 20 12 Z"/>
+      <path class="frame-stitch" data-region="A04" d="M18 10 H120 Q125 10 130 12 Q135 10 140 10 H416 Q424 10 424 18 V274 Q424 282 416 282 H140 Q135 282 130 280 Q125 282 120 282 H18 Q10 282 10 274 V18 Q10 10 18 10 Z"/>
+      <path class="frame-spread" data-region="A05" d="M21 14 H120 Q125 14 130 16 Q135 14 140 14 H412 Q419 14 419 21 V271 Q419 278 412 278 H140 Q135 278 130 276 Q125 278 120 278 H21 Q14 278 14 271 V21 Q14 14 21 14 Z"/>
+    </svg>
+
+    <div class="visit-count"><span>TODAY <b data-config="home.today">1</b></span><span>TOTAL <span data-config="home.total">2</span></span></div>
+    <h1 class="homepage-title" data-config="page.title">님의 미니홈피</h1>
+    <div class="header-actions">+ 일촌맺기 <span>+ 팬되기</span></div>
+    <section class="profile-panel" data-region="A06" data-view-slot="left" aria-label="홈 왼쪽 영역"></section>
+    <section class="home-panel" id="home" data-region="A07" data-view-slot="main" aria-label="홈"></section>
+
+    <div class="home-scrollbar" data-region="B15" aria-hidden="true">
+      <span class="scroll-arrow up"></span>
+      <span class="scroll-track"><span class="scroll-thumb"></span></span>
+      <span class="scroll-arrow down"></span>
+    </div>
+
+    <nav class="page-tabs" data-region="A08" aria-label="미니홈피 메뉴"></nav>
+
+    <div class="binder-ring ring-one" data-region="B16" aria-hidden="true"></div>
+    <div class="binder-ring ring-two" data-region="B17" aria-hidden="true"></div>
+    <div class="binder-ring ring-three" data-region="B18" aria-hidden="true"></div>
+    <div class="binder-ring ring-four" data-region="B19" aria-hidden="true"></div>
+
+    <aside class="utility-panel" data-region="A09" aria-label="미니홈피 부가 메뉴">
+      <div class="utility-heading"><span>친구추천</span><span class="fan-label">팬</span></div>
+      <div class="relationship-slot"><span data-config="profile.name">정</span>　 님과 나는 <span class="relationship-badge">사촌</span></div>
+      <div class="utility-statistics"><span>댓글</span><span>스크랩<small>0</small></span><span>앱스<small>0</small></span><span>소망상자</span></div>
+      <div class="activity"><span>액티브</span><i></i></div>
+      <div class="music-player" aria-label="배경음악">
+        <div class="music-title"><span aria-hidden="true">◉</span> 음악 선물하기</div>
+        <div class="music-controls" aria-hidden="true">
+          <i class="play"></i><i class="pause"></i><i class="previous"></i><i class="next"></i>
+          <i class="speaker"></i><i class="volume"></i><span class="playlist">LIST</span>
+        </div>
+      </div>
+      <div class="gift-heading"><span>선물가게 / 추천BGM</span><i class="fold-arrow" aria-hidden="true"></i></div>
+      <div class="banner-slot banner-left reference-sprite" role="img" aria-label="별 그림의 Welcome 추천 배너"></div>
+      <div class="banner-slot banner-right reference-sprite" role="img" aria-label="만화 캐릭터 추천 배너"></div>
+    </aside>
+  </main>
+  <dialog class="admin-dialog" aria-labelledby="admin-dialog-title">
+    <form id="admin-login-form">
+      <h2 id="admin-dialog-title">관리자 로그인</h2>
+      <label for="admin-email">이메일</label>
+      <input id="admin-email" type="email" autocomplete="username" required maxlength="254">
+      <label for="admin-password">비밀번호</label>
+      <input id="admin-password" type="password" autocomplete="current-password" required>
+      <p class="admin-auth-message" role="status" aria-live="polite"></p>
+      <div class="admin-dialog-actions">
+        <button id="admin-submit" type="submit">로그인</button>
+        <button id="admin-close" type="button">닫기</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

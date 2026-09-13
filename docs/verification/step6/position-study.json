@@ -1,0 +1,125 @@
+{
+  "note": "Isolated candidates on the pre-final Step 6 layout. MAE is diagnostic, not proof of font identity.",
+  "results": [
+    {
+      "role": "title-y",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        54,
+        65,
+        14
+      ],
+      "declaration": "transform:translateY(-1px)",
+      "mae": 37.795
+    },
+    {
+      "role": "title-y",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        54,
+        65,
+        14
+      ],
+      "declaration": "transform:translateY(0px)",
+      "mae": 32.529
+    },
+    {
+      "role": "title-y",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        54,
+        65,
+        14
+      ],
+      "declaration": "transform:translateY(1px)",
+      "mae": 31.3
+    },
+    {
+      "role": "title-y",
+      "selector": ".homepage-title",
+      "region": [
+        181,
+        54,
+        65,
+        14
+      ],
+      "declaration": "transform:translateY(2px)",
+      "mae": 34.989
+    },
+    {
+      "role": "balloon-x",
+      "selector": ".room-balloon",
+      "region": [
+        246,
+        144,
+        82,
+        40
+      ],
+      "declaration": "transform:translateX(0px)",
+      "mae": 5.624
+    },
+    {
+      "role": "balloon-x",
+      "selector": ".room-balloon",
+      "region": [
+        246,
+        144,
+        82,
+        40
+      ],
+      "declaration": "transform:translateX(0.5px)",
+      "mae": 6.845
+    },
+    {
+      "role": "balloon-x",
+      "selector": ".room-balloon",
+      "region": [
+        246,
+        144,
+        82,
+        40
+      ],
+      "declaration": "transform:translateX(1px)",
+      "mae": 7.948
+    },
+    {
+      "role": "balloon-y",
+      "selector": ".room-balloon",
+      "region": [
+        246,
+        144,
+        82,
+        40
+      ],
+      "declaration": "transform:translateY(0px)",
+      "mae": 5.623
+    },
+    {
+      "role": "balloon-y",
+      "selector": ".room-balloon",
+      "region": [
+        246,
+        144,
+        82,
+        40
+      ],
+      "declaration": "transform:translateY(0.5px)",
+      "mae": 8.728
+    },
+    {
+      "role": "balloon-y",
+      "selector": ".room-balloon",
+      "region": [
+        246,
+        144,
+        82,
+        40
+      ],
+      "declaration": "transform:translateY(1px)",
+      "mae": 11.55
+    }
+  ]
+}

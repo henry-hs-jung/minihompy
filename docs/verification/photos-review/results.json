@@ -1,0 +1,302 @@
+{
+  "hashes": {
+    "config.js": "072906bf84d77b287ad3197226e5572255461fb8a022eecb11ff84b053f40b6e",
+    "photos-data.js": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec"
+  },
+  "results": [
+    {
+      "width": 1000,
+      "height": 700,
+      "dpr": 1,
+      "scenario": "baseline",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 1000,
+      "height": 700,
+      "dpr": 1,
+      "scenario": "long",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 1000,
+      "height": 700,
+      "dpr": 1,
+      "scenario": "images",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 480,
+            "ratio": 0.5
+          },
+          {
+            "width": 240,
+            "height": 80,
+            "ratio": 3
+          },
+          {
+            "width": 240,
+            "height": 240,
+            "ratio": 1
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 1000,
+      "height": 700,
+      "dpr": 1,
+      "scenario": "many",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 1,
+      "scenario": "baseline",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 1,
+      "scenario": "long",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 1,
+      "scenario": "images",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 480,
+            "ratio": 0.5
+          },
+          {
+            "width": 240,
+            "height": 80,
+            "ratio": 3
+          },
+          {
+            "width": 240,
+            "height": 240,
+            "ratio": 1
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 1,
+      "scenario": "many",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "scenario": "baseline",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "scenario": "long",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "scenario": "images",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 480,
+            "ratio": 0.5
+          },
+          {
+            "width": 240,
+            "height": 80,
+            "ratio": 3
+          },
+          {
+            "width": 240,
+            "height": 240,
+            "ratio": 1
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "scenario": "many",
+      "check": {
+        "overflows": [],
+        "foldersHorizontalOverflow": false,
+        "mainOverflow": false,
+        "sidebarOverflow": false,
+        "foldersOverlapFooter": false,
+        "images": [
+          {
+            "width": 240,
+            "height": 160,
+            "ratio": 1.5009380863039399
+          }
+        ],
+        "canvasWidth": 579
+      },
+      "errors": []
+    }
+  ]
+}
