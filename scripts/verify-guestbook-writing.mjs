@@ -115,6 +115,15 @@ try {
     if (width === 375) await page.evaluate(() => window.scrollTo(120, 0));
     await page.screenshot({ path: new URL(`admin-${width}.png`, out).pathname });
     assert(await page.locator('.guestbook-scroll').evaluate(el => el.scrollWidth <= el.clientWidth));
+    const thumb=page.locator('.guestbook-scrollbar .photo-scroll-thumb');
+    await thumb.scrollIntoViewIfNeeded();
+    const thumbBox=await thumb.boundingBox(), trackBox=await page.locator('.guestbook-scrollbar .photo-scroll-track').boundingBox();
+    const travel=trackBox.height-thumbBox.height;
+    await page.mouse.move(thumbBox.x+thumbBox.width/2,thumbBox.y+thumbBox.height/2);
+    await page.mouse.down();
+    await page.mouse.move(thumbBox.x+thumbBox.width/2,thumbBox.y+thumbBox.height/2+travel*0.3,{steps:5});
+    await page.mouse.up();
+    assert(await page.locator('.guestbook-scroll').evaluate(el => Math.abs(el.scrollTop-(el.scrollHeight-el.clientHeight)*0.3)<3));
     await changeActor('reader');
     await page.waitForFunction(() => document.querySelectorAll('.guestbook-post').length === 1);
     assert.equal(await page.locator('.guestbook-post.is-private').count(), 0);

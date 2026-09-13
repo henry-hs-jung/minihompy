@@ -186,7 +186,7 @@
       event.preventDefault();
     });
     thumb.addEventListener('pointermove', event => {
-      const travel = track.clientHeight - thumb.offsetHeight;
+      const travel = track.getBoundingClientRect().height - thumb.getBoundingClientRect().height;
       if (drag && travel > 0) content.scrollTop = drag.top + (event.clientY - drag.y) * (content.scrollHeight - content.clientHeight) / travel;
     });
     thumb.addEventListener('lostpointercapture', () => { drag = null; });

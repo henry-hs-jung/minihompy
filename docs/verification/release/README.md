@@ -11,7 +11,7 @@ CHROMIUM_PATH=/path/to/chromium node scripts/verify-release.mjs /path/to/playwri
 CHROMIUM_PATH=/path/to/chromium node scripts/verify-release-live-read.mjs /path/to/playwright/index.mjs
 ```
 
-첫 명령은 19개 검사 스크립트를 순차 실행하고 `results.json`에 결과와 각 검사 출력을 기록한다. 로컬 PGlite 및 모의 API 기반이다. 댓글 DB 검사는 001~010 마이그레이션을 모두 같은 DB에 적용한 뒤 부모 글과 댓글 권한을 검사한다. 두 번째 명령은 새 브라우저에서 실제 Supabase의 GET만 허용하고 10개 테이블과 프로필 저장소 모듈의 공개 조회 결과를 `live-read.json`에 기록한다. 사용자 본문은 기록하지 않는다.
+첫 명령은 20개 검사 스크립트(배율 검사 포함)를 순차 실행하고 `results.json`에 결과와 각 검사 출력을 기록한다. 로컬 PGlite 및 모의 API 기반이다. 댓글 DB 검사는 001~010 마이그레이션을 모두 같은 DB에 적용한 뒤 부모 글과 댓글 권한을 검사한다. 두 번째 명령은 새 브라우저에서 실제 Supabase의 GET만 허용하고 10개 테이블과 프로필 저장소 모듈의 공개 조회 결과를 `live-read.json`에 기록한다. 사용자 본문은 기록하지 않는다.
 
 정적 복원 초기의 `verify-integration.mjs`는 현재 DB 구조에 맞지 않는 가정이 있어 이번 기능 통합 검사에 사용하지 않는다. HOME 픽셀/탭/탐색 회귀는 현재 `verify-navigation.mjs`로 검사한다.
 

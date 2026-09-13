@@ -28,7 +28,7 @@ try {
       await page.locator(`[data-menu="${menu}"]`).click();
       await page.waitForLoadState('networkidle');
       assert.equal(await page.locator('[data-view-slot="main"]').getAttribute('data-view'),menu);
-      assert.equal(await page.locator('.minihompy').evaluate(e => e.getBoundingClientRect().width),579);
+      assert.equal(await page.locator('.minihompy').evaluate(e => e.getBoundingClientRect().width),width >= 900 ? 868.5 : 579);
       assert(await page.locator('img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0)));
       await page.evaluate(() => window.scrollTo(0,0));
       await page.screenshot({path:new URL(`${menu}-${width}.png`,out).pathname});

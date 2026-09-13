@@ -77,7 +77,8 @@ try {
     assert.equal(await page.locator('.page-tab').last().getAttribute('data-menu'),'settings');
     assert(await page.locator('[data-menu="home"] .tab-label').evaluate(e=>e.classList.contains('text-clipped')));
     const geometry=await page.locator('.page-tab').evaluateAll(elements=>elements.map(e=>({top:e.getBoundingClientRect().top,height:e.getBoundingClientRect().height})));
-    assert.equal(geometry[9].top,234); assert.equal(geometry[9].height,18);
+    const scale=width>=900?1.5:1;
+    assert.equal(geometry[9].top,234*scale); assert.equal(geometry[9].height,18*scale);
     assert(await page.locator('.settings-scroll').evaluate(e=>e.scrollWidth<=e.clientWidth));
     await page.screenshot({path:new URL(`menus-${width}-dpr${dpr}.png`,out).pathname});
     if(width<579){await page.evaluate(()=>scrollTo(1000,0));await page.screenshot({path:new URL(`menus-right-${width}-dpr${dpr}.png`,out).pathname});}

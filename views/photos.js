@@ -64,7 +64,7 @@
     });
     scrollThumb.addEventListener('pointermove', event => {
       if (!drag) return;
-      const travel = scrollTrack.clientHeight - scrollThumb.offsetHeight;
+      const travel = scrollTrack.getBoundingClientRect().height - scrollThumb.getBoundingClientRect().height;
       if (travel > 0) mainRoot.scrollTop = drag.top + (event.clientY - drag.y) * (mainRoot.scrollHeight - mainRoot.clientHeight) / travel;
     });
     scrollThumb.addEventListener('lostpointercapture', () => { drag = null; });

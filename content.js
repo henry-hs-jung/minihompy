@@ -5,7 +5,9 @@
       name.classList.remove('relationship-name-clipped');
       const range = document.createRange();
       range.selectNodeContents(name);
-      name.classList.toggle('relationship-name-clipped', range.getBoundingClientRect().width > 14);
+      const frame = name.closest('.minihompy');
+      const scale = frame.getBoundingClientRect().width / frame.offsetWidth;
+      name.classList.toggle('relationship-name-clipped', range.getBoundingClientRect().width > 14 * scale);
     }
     for (const element of document.querySelectorAll('.homepage-title, .profile-status, .profile-name, .recent-empty, .room-balloon > span, .friends-prompt > [data-config], .tab-label, .visit-count > span')) {
       element.classList.toggle('text-clipped', element.scrollWidth > element.clientWidth);
@@ -17,6 +19,7 @@
     fitText();
     document.fonts.ready.then(fitText);
   }
+  window.addEventListener('resize', scheduleFit);
   window.MinihompyContent = {
     fit: scheduleFit,
     apply(root = document) {

@@ -90,7 +90,7 @@ try {
     await (await chooser).setFiles({ name: 'two.jpg', mimeType: 'image/jpeg', buffer: picture });
     await page.waitForFunction(() => document.querySelectorAll('.ql-editor img').length === 2 && !window.MinihompyPhotoEditor.busy);
     await body.press('Control+End'); await page.keyboard.insertText('마지막 글 <script>window.bad=true</script>');
-    assert(await page.locator('.ql-editor img').evaluateAll(images => images.every(img => img.getBoundingClientRect().width <= img.closest('.ql-editor').clientWidth)));
+    assert(await page.locator('.ql-editor img').evaluateAll(images => images.every(img => img.offsetWidth <= img.closest('.ql-editor').clientWidth)));
     await page.screenshot({ path: new URL(`editor-${width}.png`, out).pathname });
     await page.locator('.photos-scroll').evaluate(el => { el.scrollTop = 0; });
     await page.screenshot({ path: new URL(`editor-top-${width}.png`, out).pathname });
