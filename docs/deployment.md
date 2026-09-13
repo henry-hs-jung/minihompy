@@ -14,3 +14,13 @@ Supabase publishable key는 브라우저용 공개 키다. secret/service_role �
 라우팅은 `#/home`, `#/photos` 등의 해시 경로여서 Pages의 별도 SPA fallback은 필요하지 않다. DB 설정에 저장된 문구를 바꾸는 데 Git push는 필요 없다. 코드/스타일 변경은 커밋 후 main으로 push한다.
 
 공식 구성 참고: [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+## 배포 검증
+
+2026-09-13 첫 배포 성공. GitHub Pages 환경의 허용 브랜치는 main으로 설정했다. `scripts/verify-pages.mjs`가 실제 공개 주소의 1000/375px 화면에서 6개 메뉴, 이미지 로딩, DB 조회, 해시 경로 새로고침, 579px 프레임을 검사했다. references/SQL/docs 경로가 사이트에서 404인 것도 확인했다. 운영 쓰기나 계정 생성은 하지 않았다. GET 및 조회 전용 diary_written_dates RPC만 허용한 검사다.
+
+```sh
+CHROMIUM_PATH=/path/to/chromium node scripts/verify-pages.mjs /path/to/playwright/index.mjs
+```
+
+관리자 로그인·실제 저장은 배포 주소에서 사용자가 확인한다. 검수 캡처는 로컬 `docs/verification/deployment/`에만 보관한다.
