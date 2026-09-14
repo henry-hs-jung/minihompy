@@ -27,7 +27,7 @@ try {
     assert.deepEqual(await page.locator('.page-tab').evaluateAll(nodes=>nodes.map(n=>n.dataset.menu)),ids);
     assert.equal(await page.locator('[data-menu="settings"]').count(),0);
     const geometry=await page.locator('.page-tab').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return {x:r.x+scrollX,y:r.y,width:r.width,height:r.height};}));
-    const scale=width>=900?1.5:1;
+    const scale=width>=1125?1.875:1;
     geometry.forEach((r,i)=>assert.deepEqual(r,{x:432*scale,y:(73+(i?17+(i-1)*18:0))*scale,width:31*scale,height:(i?18:17)*scale}));
     for(const id of ids){
       await page.locator(`[data-menu="${id}"]`).click();

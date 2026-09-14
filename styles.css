@@ -25,8 +25,8 @@ button, input, select, textarea { font: inherit; border-radius: 0; }
 button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentColor; }
 .minihompy { position: relative; isolation: isolate; width: 579px; height: 349px; }
 .minihompy > * { position: absolute; }
-@media (min-width: 900px) and (min-height: 560px) {
-  .minihompy, .admin-dialog { zoom: 1.5; }
+@media (min-width: 1125px) and (min-height: 700px) {
+  .minihompy, .admin-dialog { zoom: 1.875; }
 }
 
 .site-bar { left: 7px; top: 4px; width: 560px; height: 16px; background: #f8f8f8; z-index: 30; font-size: 6.5px; line-height: 8px; color: #666; }

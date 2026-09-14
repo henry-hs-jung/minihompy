@@ -8,7 +8,7 @@ const out = new URL('../docs/verification/deployment/', import.meta.url);
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH, headless: true });
 try {
-  for (const width of [1000,375]) {
+  for (const width of [1280,375]) {
     const page = await browser.newPage({ viewport: {width,height:812}, deviceScaleFactor: width === 375 ? 2 : 1 });
     const errors = [], blocked = [], badResponses = [];
     page.on('pageerror', e => errors.push(e.message));
@@ -30,7 +30,7 @@ try {
       await page.locator(`[data-menu="${menu}"]`).click();
       await page.waitForLoadState('networkidle');
       assert.equal(await page.locator('[data-view-slot="main"]').getAttribute('data-view'),menu);
-      assert.equal(await page.locator('.minihompy').evaluate(e => e.getBoundingClientRect().width),width >= 900 ? 868.5 : 579);
+      assert.equal(await page.locator('.minihompy').evaluate(e => e.getBoundingClientRect().width),width >= 1125 ? 1085.625 : 579);
       assert(await page.locator('img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0)));
       await page.evaluate(() => window.scrollTo(0,0));
       await page.screenshot({path:new URL(`${menu}-${width}.png`,out).pathname});
