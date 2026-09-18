@@ -4,8 +4,9 @@ import { runInNewContext } from 'node:vm';
 
 console.log('=== Starting Visitor Identity Client Unit Tests ===\n');
 
-// Load visitor-identity.js in mock browser environment
+// Load scripts in mock browser environment
 const scriptContent = await readFile(new URL('../visitor-identity.js', import.meta.url), 'utf8');
+const loginScriptContent = await readFile(new URL('../visitor-identity-login.js', import.meta.url), 'utf8');
 
 function createMockWindow(overrides = {}) {
   const listeners = new Map();
@@ -67,6 +68,7 @@ function createMockWindow(overrides = {}) {
   };
 
   runInNewContext(scriptContent, context);
+  runInNewContext(loginScriptContent, context);
   return win;
 }
 
@@ -293,6 +295,69 @@ assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그인');
 assert.equal(mockElements['#visitor-auth-toggle'].title, '방문자 로그인');
 
 console.log('   ✓ UI element binding verified: visitor name shown/hidden, toggle button text/title updated.');
+
+// --- 8. Visitor Identity Login: Login Intent & Activation Ticket Flow ---
+console.log('8. Testing login intent handling and activation ticket exchange...');
+
+let activationRequestPayload = null;
+const mockWin8 = createMockWindow({
+  document: {
+    readyState: 'complete',
+    querySelector: () => null,
+  },
+});
+
+mockWin8.fetch = async (url, options) => {
+  if (url.includes('/activation-tickets')) {
+    activationRequestPayload = JSON.parse(options.body);
+    return {
+      ok: true,
+      json: async () => ({
+        activation_ticket: 'ticket-result-999',
+      }),
+    };
+  }
+  throw new Error('Unexpected fetch: ' + url);
+};
+
+const mockClientProvider = () => ({
+  auth: {
+    async getSession() {
+      return {
+        data: {
+          session: {
+            user: { id: 'local-owner-uuid-777' },
+          },
+        },
+      };
+    },
+    async getUser() {
+      return {
+        data: {
+          user: { id: 'local-owner-uuid-777' },
+        },
+      };
+    },
+  },
+});
+
+const visitorLogin = mockWin8.createMinihompyVisitorLogin(
+  {
+    enabled: true,
+    siteId: 'site-a-uuid',
+    centralUrl: 'http://central.local',
+  },
+  mockClientProvider
+);
+
+const activated = await visitorLogin.handleLoginIntent('incoming-intent-token-xyz');
+assert.equal(activated, true);
+assert.equal(activationRequestPayload.login_intent, 'incoming-intent-token-xyz');
+assert.equal(activationRequestPayload.site_id, 'site-a-uuid');
+assert.equal(activationRequestPayload.local_user_id, 'local-owner-uuid-777');
+assert(mockWin8.location.lastRedirect.includes('/complete#ticket=ticket-result-999'));
+
+console.log('   ✓ Login intent flow verified: existing local session reused, activation ticket issued, redirected to /complete.');
 
 console.log('\n=============================================================');
 console.log('ALL CLIENT VISITOR IDENTITY TESTS PASSED (100% SUCCESS)');
