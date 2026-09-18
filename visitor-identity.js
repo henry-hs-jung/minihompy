@@ -255,10 +255,54 @@
     });
   };
 
-  // 브라우저 로드 시 싱글톤 인스턴스 준비
+  // DOM UI 바인딩 (검색창 우측 방문자 이름 표시 및 우측 상단 방문자 로그인/로그아웃 버튼)
+  const bindVisitorUI = shared => {
+    const display = document.querySelector('#visitor-display');
+    const nameEl = document.querySelector('#visitor-name');
+    const toggle = document.querySelector('#visitor-auth-toggle');
+
+    function updateUI(sharedState) {
+      if (!toggle) return;
+      if (sharedState.status === 'identified' && sharedState.visitor) {
+        toggle.textContent = '로그아웃';
+        toggle.title = '방문자 로그아웃';
+        if (display && nameEl) {
+          nameEl.textContent = sharedState.visitor.display_name || sharedState.visitor.handle;
+          display.hidden = false;
+        }
+      } else {
+        toggle.textContent = '로그인';
+        toggle.title = '방문자 로그인';
+        if (display && nameEl) {
+          nameEl.textContent = '';
+          display.hidden = true;
+        }
+      }
+    }
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        if (shared.state.status === 'identified') {
+          location.href = shared.getLogoutUrl();
+        } else {
+          location.href = shared.getLoginUrl();
+        }
+      });
+    }
+
+    window.addEventListener('minihompy:visitor-identity', ev => {
+      updateUI(ev.detail);
+    });
+
+    updateUI(shared.state);
+  };
+
+  // 브라우저 로드 시 싱글톤 인스턴스 준비 및 초기화
   const initShared = () => {
     const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
     window.MinihompySharedIdentity = window.createMinihompySharedIdentity(config);
+    bindVisitorUI(window.MinihompySharedIdentity);
+    void window.MinihompySharedIdentity.resolve();
   };
 
   if (document.readyState === 'loading') {

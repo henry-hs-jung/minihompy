@@ -234,6 +234,66 @@ assert.equal(mockWin6.location.hash, '#/board');
 
 console.log('   ✓ Return flow verified: token resolved, guard cleared, internal route (#/board) restored.');
 
+// --- 7. Shared Identity: UI Element Binding & Display Updates ---
+console.log('7. Testing UI element binding (search-bar visitor display & button toggle)...');
+
+const mockElements = {
+  '#visitor-display': { hidden: true },
+  '#visitor-name': { textContent: '' },
+  '#visitor-auth-toggle': {
+    textContent: '로그인',
+    title: '방문자 로그인',
+    listeners: {},
+    addEventListener(type, fn) { this.listeners[type] = fn; },
+    click() { if (this.listeners.click) this.listeners.click(); },
+  },
+};
+
+const mockWin7 = createMockWindow({
+  document: {
+    readyState: 'complete',
+    querySelector: selector => mockElements[selector] || null,
+  },
+});
+
+const sharedIdentityUI = mockWin7.createMinihompySharedIdentity({
+  enabled: true,
+  siteId: 'site-a-uuid',
+  centralUrl: 'http://central.local',
+});
+
+// Initially anonymous
+assert.equal(mockElements['#visitor-display'].hidden, true);
+assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그인');
+
+// Simulate identified visitor event
+mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity', {
+  detail: {
+    status: 'identified',
+    visitor: { display_name: '홍길동', handle: 'hong' },
+  },
+}));
+
+assert.equal(mockElements['#visitor-display'].hidden, false);
+assert.equal(mockElements['#visitor-name'].textContent, '홍길동');
+assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그아웃');
+assert.equal(mockElements['#visitor-auth-toggle'].title, '방문자 로그아웃');
+
+// Simulate anonymous visitor event
+mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity', {
+  detail: {
+    status: 'anonymous',
+    visitor: null,
+  },
+}));
+
+assert.equal(mockElements['#visitor-display'].hidden, true);
+assert.equal(mockElements['#visitor-name'].textContent, '');
+assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그인');
+assert.equal(mockElements['#visitor-auth-toggle'].title, '방문자 로그인');
+
+console.log('   ✓ UI element binding verified: visitor name shown/hidden, toggle button text/title updated.');
+
 console.log('\n=============================================================');
 console.log('ALL CLIENT VISITOR IDENTITY TESTS PASSED (100% SUCCESS)');
 console.log('=============================================================\n');

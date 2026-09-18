@@ -6,6 +6,7 @@
   <title data-config="page.browserTitle">미니홈피</title>
   <link rel="stylesheet" href="styles.css">
   <script src="config.js" defer></script>
+  <script src="visitor-identity-config.js" defer></script>
   <script src="visitor-identity.js" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="assets/vendor/supabase-2.116.0.js" defer></script>
@@ -39,11 +40,16 @@
         <input aria-label="검색어" value="현빈 그남자" disabled>
         <button type="button" disabled>검색</button>
       </div>
+      <div class="visitor-display" id="visitor-display" hidden>
+        <span class="visitor-label">방문자:</span>
+        <span class="visitor-name" id="visitor-name"></span>
+      </div>
       <div class="site-links" aria-label="사이트 메뉴">
         <span>메인</span><span>내 미니홈피</span>
         <span class="history-links">◀ 주　 › 정　 › 정</span>
         <span>내모아보기<span class="tiny-orange">▴</span></span>
-        <span>바로가기 ▴</span><span>랜덤</span><span><button id="admin-auth-toggle" type="button" title="관리자 로그인">로그인</button></span>
+        <span>바로가기 ▴</span><span>랜덤</span><span><button id="admin-auth-toggle" type="button" title="관리자 로그인">관리자</button></span>
+        <span><button id="visitor-auth-toggle" type="button" title="방문자 로그인">로그인</button></span>
       </div>
     </header>
 

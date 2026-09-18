@@ -33,9 +33,12 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .search { position: absolute; left: 12px; top: 2px; display: flex; height: 12px; }
 .search input { width: 70px; height: 12px; padding: 0 2px; border: 1px solid #df9691; border-right: 0; background: #fff; }
 .search button { width: 21px; height: 12px; padding: 0; border: 1px solid #dc3c2d; background: #ee3d2c; color: #fff; }
+.visitor-display { position: absolute; left: 108px; top: 2px; display: flex; align-items: center; gap: 2px; height: 12px; font-size: 6.5px; line-height: 9px; color: #555; max-width: 125px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.visitor-display .visitor-label { color: #888; }
+.visitor-display .visitor-name { color: #26778c; font-weight: bold; }
 .site-links { position: absolute; left: 240px; right: 10px; top: 2px; display: flex; align-items: center; justify-content: space-between; height: 11px; white-space: nowrap; }
 .site-links > span + span { border-left: 1px solid #dedede; padding-left: 3px; }
-#admin-auth-toggle { width: 24px; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+#admin-auth-toggle, #visitor-auth-toggle { width: 24px; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
 .admin-dialog { width: 270px; max-width: calc(100vw - 24px); padding: 14px; border: 1px solid #819b9f; border-radius: 3px; color: #555; background: #fff; font: 11px/17px var(--ui-font); }
 .admin-dialog::backdrop { background: rgb(0 0 0 / 20%); }
 .admin-dialog h2 { margin: 0 0 13px; padding-bottom: 6px; border-bottom: 1px solid #ddd; color: #199db9; font-size: 12px; }
@@ -44,7 +47,7 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .admin-auth-message { min-height: 34px; margin: 8px 0; color: #b45728; overflow-wrap: anywhere; }
 .admin-dialog-actions { display: flex; justify-content: flex-end; gap: 5px; }
 .admin-dialog-actions button { padding: 2px 8px; border: 1px solid #bbb; background: #f7f7f7; color: #555; font: inherit; cursor: pointer; }
-.admin-dialog :focus-visible, #admin-auth-toggle:focus-visible { outline: 1px dotted #26778c; outline-offset: 1px; }
+.admin-dialog :focus-visible, #admin-auth-toggle:focus-visible, #visitor-auth-toggle:focus-visible { outline: 1px dotted #26778c; outline-offset: 1px; }
 .history-links { color: #aaa; }
 .tiny-orange { color: var(--action); }
 

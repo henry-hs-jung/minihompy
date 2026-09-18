@@ -15,7 +15,7 @@
   let generation = 0;
   function publish(next) {
     state = Object.freeze({ role: next.role === 'admin' ? 'admin' : 'reader', userId: next.role === 'admin' ? next.userId : null });
-    toggle.textContent = state.role === 'admin' ? '로그아웃' : '로그인';
+    toggle.textContent = state.role === 'admin' ? '로그아웃' : '관리자';
     toggle.title = state.role === 'admin' ? '관리자 로그아웃' : '관리자 로그인';
     document.documentElement.dataset.identity = state.role;
     window.dispatchEvent(new CustomEvent('minihompy:identity', { detail: state }));
@@ -96,4 +96,16 @@
   window.addEventListener('online', () => { if (!busy) void refresh(); });
   window.MinihompyAdmin = Object.freeze({ get state() { return state; }, refresh });
   void refresh();
+
+  // URL 쿼리 파라미터 ?admin=login 감지 시 관리자 로그인 창 자동 오픈
+  try {
+    if (new URLSearchParams(location.search).get('admin') === 'login') {
+      setTimeout(() => {
+        if (state.role !== 'admin') {
+          dialog.showModal();
+          email.focus();
+        }
+      }, 0);
+    }
+  } catch { /* Ignore URL parsing errors */ }
 })();
