@@ -1,6 +1,12 @@
 (() => {
   'use strict';
+
+  // ============================================================================
+  // 1. 기존 로컬 익명 작성자 식별 모듈 (Local Anonymous Visitor Identity)
+  // 방명록/댓글 작성 및 로컬 관리자 확인용 (기존 코드 100% 호환성 보존)
+  // ============================================================================
   const nicknameKey = 'minihompy.visitor.nickname.v1';
+
   function normalizeNickname(value) {
     if (typeof value !== 'string') throw new TypeError('닉네임을 입력해 주세요.');
     const name = value.trim();
@@ -9,8 +15,7 @@
     }
     return name;
   }
-  // The SDK client is supplied only after the project is configured.
-  // Nicknames are display preferences, never credentials or role claims.
+
   window.createMinihompyIdentity = (client, storage) => {
     if (!client?.auth || typeof client.rpc !== 'function') throw new TypeError('Supabase client required');
     if (storage === undefined) {
@@ -22,6 +27,7 @@
       const saved = storage?.getItem(nicknameKey);
       if (saved) nickname = normalizeNickname(saved);
     } catch { /* A blocked store must not prevent reading the homepage. */ }
+
     async function current() {
       const { data: sessionData, error: sessionError } = await client.auth.getSession();
       if (sessionError) throw sessionError;
@@ -33,6 +39,7 @@
       if (adminError) throw adminError;
       return { role: admin === true ? 'admin' : 'visitor', userId: data.user.id };
     }
+
     return Object.freeze({
       getNickname() { return nickname; },
       setNickname(value) {
@@ -41,7 +48,6 @@
         catch { return false; }
       },
       current,
-      // Create an identity only on explicit writing, never on page load.
       ensureVisitor() {
         if (pendingVisitor) return pendingVisitor;
         pendingVisitor = (async () => {
@@ -57,4 +63,207 @@
       },
     });
   };
+
+  // ============================================================================
+  // 2. 분산 미니홈피 공통 방문자 식별 모듈 (Distributed Shared Visitor Identity)
+  // 중앙 식별 허브와의 1회 왕복, 리다이렉트 가드, 타임아웃 폴백, 상태 관리
+  // ============================================================================
+
+  function generateRandomAttemptId() {
+    if (window.crypto?.randomUUID) {
+      return window.crypto.randomUUID();
+    }
+    const bytes = new Uint8Array(16);
+    if (window.crypto?.getRandomValues) {
+      window.crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < 16; i++) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function getGuardKey(siteId) {
+    return `minihompy.identity.redirect.v1:${siteId}`;
+  }
+
+  function readGuard(storage, siteId, timeoutMs) {
+    try {
+      const raw = storage?.getItem(getGuardKey(siteId));
+      if (!raw) return null;
+      const guard = JSON.parse(raw);
+      if (!guard || typeof guard !== 'object' || typeof guard.started_at !== 'number') return null;
+      if (Date.now() - guard.started_at > timeoutMs) {
+        storage?.removeItem(getGuardKey(siteId));
+        return null;
+      }
+      return guard;
+    } catch {
+      return null;
+    }
+  }
+
+  function setGuard(storage, siteId, guard) {
+    try {
+      storage?.setItem(getGuardKey(siteId), JSON.stringify(guard));
+    } catch { /* Ignore storage errors */ }
+  }
+
+  function clearGuard(storage, siteId) {
+    try {
+      storage?.removeItem(getGuardKey(siteId));
+    } catch { /* Ignore storage errors */ }
+  }
+
+  // URL fragment에서 #vt=... 파싱
+  function parseFragmentToken(hash) {
+    if (!hash || !hash.startsWith('#')) return null;
+    const content = hash.slice(1);
+    if (content.startsWith('vt=')) {
+      const params = new URLSearchParams(content);
+      const vt = params.get('vt');
+      const path = params.get('path');
+      return vt ? { vt, path } : null;
+    }
+    return null;
+  }
+
+  window.createMinihompySharedIdentity = (config, storage = window.sessionStorage) => {
+    let state = Object.freeze({
+      status: 'unverified', // 'unverified' | 'identified' | 'anonymous' | 'error'
+      visitor: null, // { id, handle, display_name, homepage_url }
+      siteId: config?.siteId || null,
+    });
+
+    function publish(next) {
+      state = Object.freeze(next);
+      window.dispatchEvent(new CustomEvent('minihompy:visitor-identity', { detail: state }));
+    }
+
+    async function checkHealth(url, timeoutMs) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch(`${url}/health`, {
+          method: 'GET',
+          signal: controller.signal,
+          mode: 'cors',
+        });
+        return res.ok || res.status === 204;
+      } catch {
+        return false;
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    async function resolve() {
+      if (!config || config.enabled === false || !config.siteId || !config.centralUrl) {
+        publish({ status: 'anonymous', visitor: null, siteId: config?.siteId || null });
+        return state;
+      }
+
+      const { siteId, centralUrl, healthTimeoutMs = 1500, guardTimeoutMs = 120000 } = config;
+
+      // 1. URL fragment에 방문자 식별표(#vt=...)가 실려 복귀했는지 확인
+      const fragment = parseFragmentToken(location.hash);
+      if (fragment?.vt) {
+        const guard = readGuard(storage, siteId, guardTimeoutMs);
+        try {
+          const res = await fetch(`${centralUrl}/visits/resolve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ visit_token: fragment.vt, site_id: siteId }),
+            mode: 'cors',
+          });
+
+          if (!res.ok) {
+            clearGuard(storage, siteId);
+            publish({ status: 'error', visitor: null, siteId });
+            return state;
+          }
+
+          const data = await res.json();
+          // attempt_id 확인
+          if (guard && data.attempt_id && guard.attempt_id !== data.attempt_id) {
+            clearGuard(storage, siteId);
+            publish({ status: 'error', visitor: null, siteId });
+            return state;
+          }
+
+          clearGuard(storage, siteId);
+
+          // URL fragment 정리 및 원래 경로 복원
+          const restoredHash = fragment.path || (data.return_path && data.return_path.includes('#') ? '#' + data.return_path.split('#')[1] : '#/home');
+          try {
+            history.replaceState(null, '', restoredHash.startsWith('#') ? restoredHash : '#/home');
+          } catch { /* Ignore history state errors */ }
+
+          if (data.status === 'identified' && data.profile) {
+            publish({ status: 'identified', visitor: data.profile, siteId });
+          } else {
+            publish({ status: 'anonymous', visitor: null, siteId });
+          }
+          return state;
+        } catch {
+          clearGuard(storage, siteId);
+          publish({ status: 'error', visitor: null, siteId });
+          return state;
+        }
+      }
+
+      // 2. 이미 리다이렉트 가드가 걸려있는지 확인 (재진입 또는 이미 확인한 세션)
+      const existingGuard = readGuard(storage, siteId, guardTimeoutMs);
+      if (existingGuard) {
+        // 이번 세션에서 이미 중앙 확인을 시도했으므로 추가 리다이렉트 없이 익명 확정
+        publish({ status: 'anonymous', visitor: null, siteId });
+        return state;
+      }
+
+      // 3. 중앙 헬스체크 (1.5초 타임아웃)
+      const isHealthy = await checkHealth(centralUrl, healthTimeoutMs);
+      if (!isHealthy) {
+        // 중앙 응답 지연 또는 장애 시 익명 상태로 즉시 폴백 (무한 루프/지연 방지)
+        setGuard(storage, siteId, { attempt_id: 'fallback', status: 'fallback', started_at: Date.now() });
+        publish({ status: 'error', visitor: null, siteId });
+        return state;
+      }
+
+      // 4. 리다이렉트 가드 설정 후 중앙 /visit 으로 최상위 이동
+      const attemptId = generateRandomAttemptId();
+      setGuard(storage, siteId, { attempt_id: attemptId, status: 'checking', started_at: Date.now() });
+
+      const currentReturnPath = location.pathname + location.search + location.hash;
+      const visitUrl = `${centralUrl}/visit?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(attemptId)}&return_path=${encodeURIComponent(currentReturnPath)}`;
+
+      location.replace(visitUrl);
+      return state;
+    }
+
+    return Object.freeze({
+      get state() { return state; },
+      resolve,
+      getLoginUrl() {
+        if (!config?.centralUrl) return '#';
+        const returnPath = location.pathname + location.search + location.hash;
+        return `${config.centralUrl}/login?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
+      },
+      getLogoutUrl() {
+        if (!config?.centralUrl) return '#';
+        const returnPath = location.pathname + location.search + location.hash;
+        return `${config.centralUrl}/logout?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
+      },
+    });
+  };
+
+  // 브라우저 로드 시 싱글톤 인스턴스 준비
+  const initShared = () => {
+    const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
+    window.MinihompySharedIdentity = window.createMinihompySharedIdentity(config);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShared, { once: true });
+  } else {
+    initShared();
+  }
 })();
