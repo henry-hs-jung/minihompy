@@ -24,6 +24,8 @@
 
 `index.html`을 열면 DB에서 설정을 읽는다. 공개 URL/키는 `supabase-config.js`, 고정된 SDK는 `assets/vendor/`에 있다. 서버·빌드 없이 실행되지만 설정/게시판/사진첩/다이어리 조회와 인증에는 인터넷 연결이 필요하다. DB 오류 시 과거 샘플 설정을 대신 표시하지 않는다.
 
+분산 미니홈피 간 공통 방문자 식별을 지원한다. 중앙 허브 연동 설정은 `visitor-identity-config.js`에 두며, 식별 시 상단 검색창 우측에 방문자 이름이 표시되고 우측 상단 버튼은 공통 방문자 상태(`로그인`/`로그아웃`)와 연동된다. 관리자 기능은 기존 Supabase 인증으로 별도 판정한다. [공통 식별 설계](docs/shared-visitor-identity.md) · [검수 기록](docs/verification/shared-visitor-identity/README.md).
+
 ## 초기 단계 기록
 
 아래 내용은 정적 복원 당시의 기록이다. config 파일 직접 편집, 로그인/게시판 저장 미구현, API 키 없음 등의 설명은 위 현재 상태로 대체되었다.
