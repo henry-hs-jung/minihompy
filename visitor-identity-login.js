@@ -10,74 +10,109 @@
   // 4) 중앙 /complete#ticket=... 로 이동하여 중앙 세션 토큰 저장 후 원래 미니홈피로 복귀
   // ============================================================================
 
+  // 세션 없을 때 로그인 다이얼로그 자동 팝업 여부
+  // true  = 옵션 B: 기존 관리자 로그인 다이얼로그 자동 팝업
+  // false = 옵션 A: 안내 메시지만 표시 (사용자가 수동으로 로그인)
+  const AUTO_OPEN_LOGIN_DIALOG = true;
+
   window.createMinihompyVisitorLogin = (config, clientProvider) => {
     let busy = false;
 
     async function handleLoginIntent(loginIntent) {
-      if (!config?.enabled || !config?.siteId || !config?.centralUrl) return false;
-      if (!loginIntent || busy) return false;
+      try {
+        if (!config?.enabled || !config?.siteId || (!config?.centralUrl && !config?.centralApiUrl)) {
+          console.warn('[visitor-identity-login] 중단: 설정 누락. enabled=', config?.enabled, 'siteId=', config?.siteId);
+          return false;
+        }
+        if (!loginIntent || busy) {
+          console.warn('[visitor-identity-login] 중단: loginIntent 없음 또는 이미 실행 중. busy=', busy);
+          return false;
+        }
 
-      busy = true;
-      const client = clientProvider ? clientProvider() : window.MinihompyBackend?.getClient('admin');
-      if (!client?.auth) {
+        busy = true;
+        const client = clientProvider ? clientProvider() : window.MinihompyBackend?.getClient('admin');
+        if (!client?.auth) {
+          console.warn('[visitor-identity-login] 중단: client.auth 없음. MinihompyBackend=', !!window.MinihompyBackend);
+          busy = false;
+          return false;
+        }
+
+        // 1. 기존 유효한 로컬 Supabase 세션 확인
+        try {
+          const { data: sessionData } = await client.auth.getSession();
+          if (sessionData?.session?.user?.id) {
+            // 이미 로그인되어 있음 -> 비밀번호 입력 없이 즉시 중앙 활성화 진행
+            await requestActivationTicket(loginIntent, sessionData.session.user.id);
+            return true;
+          }
+        } catch (err) {
+          console.warn('[visitor-identity-login] 로컬 세션 확인 실패, 로그인 대화상자를 엽니다:', err);
+        }
+
+        // 2. 로그인되어 있지 않은 경우 처리
+        if (AUTO_OPEN_LOGIN_DIALOG) {
+          // 옵션 B: 기존 관리자 로그인 다이얼로그 재활용
+          // 로그인 완료(minihompy:identity 이벤트) 또는 다이얼로그 닫힘까지 대기
+          const dialog = document.querySelector('.admin-dialog');
+          if (dialog && typeof dialog.showModal === 'function') {
+            const msg = document.querySelector('.admin-auth-message');
+            if (msg) msg.textContent = '중앙 연동을 위해 로그인이 필요합니다.';
+            dialog.showModal();
+            document.querySelector('#admin-email')?.focus();
+
+            const userId = await new Promise((resolve) => {
+              function onIdentity(e) {
+                if (e.detail?.role === 'admin' && e.detail?.userId) {
+                  window.removeEventListener('minihompy:identity', onIdentity);
+                  resolve(e.detail.userId);
+                }
+              }
+              window.addEventListener('minihompy:identity', onIdentity);
+              // 다이얼로그가 닫히면(취소) null로 종료
+              dialog.addEventListener('close', () => {
+                window.removeEventListener('minihompy:identity', onIdentity);
+                resolve(null);
+              }, { once: true });
+            });
+
+            if (userId) {
+              await requestActivationTicket(loginIntent, userId);
+              busy = false;
+              return true;
+            } else {
+              // 취소 시 안내 메시지 (옵션 A 동작과 동일)
+              if (msg) msg.textContent = '로그인이 취소되었습니다. 중앙 연동을 완료하려면 먼저 로그인해 주세요.';
+            }
+          } else {
+            // 다이얼로그 요소를 찾지 못한 경우 — 옵션 A 폴백
+            console.warn('[visitor-identity-login] .admin-dialog 요소를 찾지 못했습니다. 안내 메시지만 표시합니다.');
+            const msg = document.querySelector('.admin-auth-message');
+            if (msg) msg.textContent = '중앙 연동을 위해 먼저 로그인해 주세요.';
+          }
+        } else {
+          // 옵션 A: 안내 메시지만 표시
+          const msg = document.querySelector('.admin-auth-message');
+          if (msg) msg.textContent = '중앙 연동을 위해 먼저 로그인해 주세요.';
+          console.warn('[visitor-identity-login] 로컬 세션 없음 — 로그인 필요 (AUTO_OPEN_LOGIN_DIALOG=false)');
+        }
+
+        busy = false;
+        return false;
+      } catch (err) {
+        console.error('[visitor-identity-login] CRITICAL ERROR in handleLoginIntent:', err.message, err);
         busy = false;
         return false;
       }
-
-      // 1. 기존 유효한 로컬 Supabase 세션 확인
-      try {
-        const { data: sessionData } = await client.auth.getSession();
-        if (sessionData?.session?.user?.id) {
-          // 이미 로그인되어 있음 -> 비밀번호 입력 없이 즉시 중앙 활성화 진행
-          await requestActivationTicket(loginIntent, sessionData.session.user.id);
-          return true;
-        }
-      } catch (err) {
-        console.warn('로컬 세션 확인 실패, 로그인 대화상자를 엽니다:', err);
-      }
-
-      // 2. 로그인되어 있지 않은 경우 -> 로그인 다이얼로그 표시 및 폼 제출 리스너 연동
-      const dialog = document.querySelector('.admin-dialog');
-      const form = document.querySelector('#admin-login-form');
-      const emailInput = document.querySelector('#admin-email');
-      const message = document.querySelector('.admin-auth-message');
-
-      if (dialog && form) {
-        if (message) {
-          message.textContent = '공통 방문자 인증을 위해 내 미니홈피 계정으로 로그인해 주세요.';
-        }
-        dialog.showModal();
-        emailInput?.focus();
-
-        const onSubmit = async () => {
-          // 약간의 지연 후 세션이 확보되었는지 확인
-          try {
-            const { data } = await client.auth.getUser();
-            if (data?.user?.id) {
-              form.removeEventListener('submit', onSubmit);
-              await requestActivationTicket(loginIntent, data.user.id);
-            }
-          } catch (err) {
-            if (message) message.textContent = '인증 정보를 확인하지 못했습니다: ' + err.message;
-          }
-        };
-
-        // admin-auth.js가 로그인을 성공시켜 getUser()가 유효해진 뒤 활성화 수행
-        form.addEventListener('submit', () => setTimeout(onSubmit, 100), { once: true });
-      }
-
-      busy = false;
-      return false;
     }
 
     async function requestActivationTicket(loginIntent, localUserId) {
-      const { siteId, centralUrl } = config;
+      const { siteId, centralUrl, centralApiUrl = centralUrl, centralPageUrl = centralUrl } = config;
       const message = document.querySelector('.admin-auth-message');
 
       try {
-        if (message) message.textContent = '중앙 식별 세션을 활성화하는 중입니다...';
+        if (message) message.textContent = '방문자 권한을 활성화하는 중...';
 
-        const res = await fetch(`${centralUrl}/activation-tickets`, {
+        const res = await fetch(`${centralApiUrl}/activation-tickets`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -90,12 +125,14 @@
 
         if (!res.ok) {
           const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.error?.message || '활성화 티켓 발급 실패 (HTTP ' + res.status + ')');
+          throw new Error(errData.error?.message || errData.error || '활성화 티켓 발급 실패 (HTTP ' + res.status + ')');
         }
 
         const data = await res.json();
         const ticket = data.activation_ticket;
-        if (!ticket) throw new Error('응답에 활성화 티켓이 없습니다.');
+        if (!ticket) throw new Error(data.error || '응답에 활성화 티켓이 없습니다.');
+
+        if (message) message.textContent = '방문자 세션을 등록하는 중...';
 
         // URL에서 login_intent 파라미터 정리
         try {
@@ -105,12 +142,12 @@
         } catch { /* Ignore history state errors */ }
 
         // 중앙 /complete 로 이동하여 중앙 세션 등록
-        const completeUrl = `${centralUrl}/complete#ticket=${encodeURIComponent(ticket)}`;
+        const completeUrl = `${centralPageUrl}/complete#ticket=${encodeURIComponent(ticket)}`;
         location.replace(completeUrl);
       } catch (err) {
         busy = false;
         if (message) message.textContent = '방문자 활성화 오류: ' + err.message;
-        console.error('Visitor activation error:', err);
+        console.error('[visitor-identity-login] Visitor activation error:', err);
       }
     }
 
@@ -131,7 +168,9 @@
         window.MinihompyVisitorLogin = visitorLogin;
         void visitorLogin.handleLoginIntent(loginIntent);
       }
-    } catch { /* Ignore URL parsing errors */ }
+    } catch (err) {
+      console.error('[visitor-identity-login] URL 처리 중 치명적 오류:', err.message, err);
+    }
   };
 
   if (document.readyState === 'loading') {

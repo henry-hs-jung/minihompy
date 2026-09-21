@@ -157,19 +157,24 @@
     }
 
     async function resolve() {
-      if (!config || config.enabled === false || !config.siteId || !config.centralUrl) {
+      if (!config || config.enabled === false || !config.siteId || (!config.centralApiUrl && !config.centralUrl)) {
         publish({ status: 'anonymous', visitor: null, siteId: config?.siteId || null });
         return state;
       }
+      
+      const fragment = parseFragmentToken(location.hash);
+      if (fragment && fragment.vt) {
+      }
 
-      const { siteId, centralUrl, healthTimeoutMs = 1500, guardTimeoutMs = 120000 } = config;
+      const { siteId, centralUrl, centralApiUrl = centralUrl, centralPageUrl = centralUrl, healthTimeoutMs = 1500, guardTimeoutMs = 120000 } = config;
 
       // 1. URL fragment에 방문자 식별표(#vt=...)가 실려 복귀했는지 확인
-      const fragment = parseFragmentToken(location.hash);
-      if (fragment?.vt) {
+      if (fragment && fragment.vt) {
+        // 이미 #vt 가 있다면 login_intent보다 우선시 (로그인이 성공해서 돌아온 것임)
+        const storage = window.sessionStorage;
         const guard = readGuard(storage, siteId, guardTimeoutMs);
         try {
-          const res = await fetch(`${centralUrl}/visits/resolve`, {
+          const res = await fetch(`${centralApiUrl}/visits/resolve`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ visit_token: fragment.vt, site_id: siteId }),
@@ -192,10 +197,13 @@
 
           clearGuard(storage, siteId);
 
-          // URL fragment 정리 및 원래 경로 복원
+          // URL fragment 정리 및 원래 경로 복원 (login_intent 파라미터도 함께 제거)
           const restoredHash = fragment.path || (data.return_path && data.return_path.includes('#') ? '#' + data.return_path.split('#')[1] : '#/home');
           try {
-            history.replaceState(null, '', restoredHash.startsWith('#') ? restoredHash : '#/home');
+            const cleanUrl = new URL(location.href);
+            cleanUrl.searchParams.delete('login_intent');
+            cleanUrl.hash = restoredHash.startsWith('#') ? restoredHash : '#/home';
+            history.replaceState(null, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
           } catch { /* Ignore history state errors */ }
 
           if (data.status === 'identified' && data.profile) {
@@ -204,14 +212,19 @@
             publish({ status: 'anonymous', visitor: null, siteId });
           }
           return state;
-        } catch {
+        } catch (err) {
           clearGuard(storage, siteId);
           publish({ status: 'error', visitor: null, siteId });
           return state;
         }
       }
 
-      // 2. 이미 리다이렉트 가드가 걸려있는지 확인 (재진입 또는 이미 확인한 세션)
+      // 2. 로그인_intent 파라미터가 있고 #vt 가 없으면, 로그인 처리기(visitor-identity-login.js)가 처리하도록 대기
+      if (location.search.includes('login_intent=')) {
+        return state;
+      }
+
+      // 3. 이미 리다이렉트 가드가 걸려있는지 확인 (재진입 또는 이미 확인한 세션)
       const existingGuard = readGuard(storage, siteId, guardTimeoutMs);
       if (existingGuard) {
         // 이번 세션에서 이미 중앙 확인을 시도했으므로 추가 리다이렉트 없이 익명 확정
@@ -220,7 +233,7 @@
       }
 
       // 3. 중앙 헬스체크 (1.5초 타임아웃)
-      const isHealthy = await checkHealth(centralUrl, healthTimeoutMs);
+      const isHealthy = await checkHealth(centralApiUrl, healthTimeoutMs);
       if (!isHealthy) {
         // 중앙 응답 지연 또는 장애 시 익명 상태로 즉시 폴백 (무한 루프/지연 방지)
         setGuard(storage, siteId, { attempt_id: 'fallback', status: 'fallback', started_at: Date.now() });
@@ -233,7 +246,7 @@
       setGuard(storage, siteId, { attempt_id: attemptId, status: 'checking', started_at: Date.now() });
 
       const currentReturnPath = location.pathname + location.search + location.hash;
-      const visitUrl = `${centralUrl}/visit?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(attemptId)}&return_path=${encodeURIComponent(currentReturnPath)}`;
+      const visitUrl = `${centralPageUrl}/visit?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(attemptId)}&return_path=${encodeURIComponent(currentReturnPath)}`;
 
       location.replace(visitUrl);
       return state;
@@ -243,14 +256,16 @@
       get state() { return state; },
       resolve,
       getLoginUrl() {
-        if (!config?.centralUrl) return '#';
+        if (!config?.centralPageUrl && !config?.centralUrl) return '#';
+        const url = config.centralPageUrl || config.centralUrl;
         const returnPath = location.pathname + location.search + location.hash;
-        return `${config.centralUrl}/login?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
+        return `${url}/login?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
       },
       getLogoutUrl() {
-        if (!config?.centralUrl) return '#';
+        if (!config?.centralPageUrl && !config?.centralUrl) return '#';
+        const url = config.centralPageUrl || config.centralUrl;
         const returnPath = location.pathname + location.search + location.hash;
-        return `${config.centralUrl}/logout?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
+        return `${url}/logout?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
       },
     });
   };
@@ -305,9 +320,8 @@
     void window.MinihompySharedIdentity.resolve();
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initShared, { once: true });
-  } else {
-    initShared();
-  }
+  // defer 속성으로 인해 이미 DOM은 파싱되어 있으므로 바로 실행합니다.
+  // app.js가 바로 이어서 실행되면서 location.hash를 '#/home'으로 덮어쓰기 전에,
+  // 우리가 먼저 location.hash의 #vt= 토큰을 가로채야 합니다!
+  initShared();
 })();
