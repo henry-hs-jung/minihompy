@@ -57,6 +57,13 @@
       }
       publish(verified);
       dialog.close();
+
+      // 중앙 방문자 식별이 활성화되어 있다면 백그라운드로 중앙 세션 자동 연동 시도
+      try {
+        await linkAdminCentralSession(verified.userId);
+      } catch (centralErr) {
+        console.warn('[admin-auth] 중앙 식별 자동 연동 실패 (무시):', centralErr);
+      }
     } catch {
       publish({ role: 'reader' });
       message.textContent = '관리자 권한을 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.';
@@ -65,6 +72,68 @@
       setBusy(false);
     }
   });
+
+  async function linkAdminCentralSession(localUserId) {
+    const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
+    if (!config || config.enabled === false || !config.siteId) return;
+
+    const { siteId, centralUrl, centralApiUrl = centralUrl, centralPageUrl = centralUrl } = config;
+    if (!centralApiUrl || !centralPageUrl) return;
+
+    // 1. 이미 중앙 세션으로 본인 식별이 되어 있는지 확인
+    const sharedState = window.MinihompySharedIdentity?.state;
+    if (sharedState?.status === 'identified' && sharedState?.visitor?.id) {
+      // 이미 중앙 방문자 식별 완료 상태이면 불필요한 왕복을 건너뜁니다
+      return;
+    }
+
+    // 2. 관리자 본인의 siteId로 login_intent 발급 요청
+    const currentPath = location.pathname + location.search + (location.hash || '#/home');
+    const intentRes = await fetch(`${centralApiUrl}/login-intents`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        site_id: siteId,
+        return_site_id: siteId,
+        return_path: currentPath,
+      }),
+      mode: 'cors',
+    });
+
+    if (!intentRes.ok) {
+      console.warn('[admin-auth] 중앙 login_intent 발급 실패 (건너뜀):', intentRes.status);
+      return;
+    }
+
+    const intentData = await intentRes.json().catch(() => ({}));
+    const loginIntent = intentData?.login_intent;
+    if (!loginIntent) return;
+
+    // 3. 발급받은 login_intent와 localUserId로 activation_ticket 발급
+    const ticketRes = await fetch(`${centralApiUrl}/activation-tickets`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        login_intent: loginIntent,
+        site_id: siteId,
+        local_user_id: localUserId,
+      }),
+      mode: 'cors',
+    });
+
+    if (!ticketRes.ok) {
+      console.warn('[admin-auth] 중앙 activation-ticket 발급 실패 (건너뜀):', ticketRes.status);
+      return;
+    }
+
+    const ticketData = await ticketRes.json().catch(() => ({}));
+    const ticket = ticketData?.activation_ticket;
+    if (!ticket) return;
+
+    // 4. 중앙 /complete 로 이동하여 중앙 세션 등록 후 자동 복귀
+    const completeUrl = `${centralPageUrl}/complete#ticket=${encodeURIComponent(ticket)}`;
+    location.replace(completeUrl);
+  }
   toggle.addEventListener('click', async () => {
     if (busy) return;
     message.textContent = '';
