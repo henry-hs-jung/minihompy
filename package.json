@@ -1,0 +1,29 @@
+{
+  "name": "minihompy-setup",
+  "version": "1.0.0",
+  "description": "분산 미니홈피 자동 셋업 CLI 도구",
+  "type": "module",
+  "bin": {
+    "minihompy-setup": "./setup/setup.mjs"
+  },
+  "files": [
+    "setup/",
+    "supabase/migrations/"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "setup": "node setup/setup.mjs",
+    "build": "node scripts/build-pages.mjs"
+  },
+  "keywords": [
+    "minihompy",
+    "cyworld",
+    "supabase",
+    "github-pages",
+    "cli"
+  ],
+  "author": "henry",
+  "license": "MIT"
+}

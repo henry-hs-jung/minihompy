@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
- * 미니홈피 자동 셋업 스크립트
+ * 미니홈피 자동 셋업 CLI 도구 (minihompy-setup)
  * 사전 조건: GitHub 계정/저장소 fork, Supabase 계정/프로젝트 생성 완료 후 실행
- * 사용법: node setup/setup.mjs [--dry-run]
+ * 사용법: 
+ *   - npx minihompy-setup [--dry-run]
+ *   - node setup/setup.mjs [--dry-run]
  */
 
 import fs from 'node:fs';
@@ -12,7 +14,6 @@ import readline from 'node:readline';
 import { execSync } from 'node:child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, '..');
 const isDryRun = process.argv.includes('--dry-run');
 
 // ── ANSI 색상 ────────────────────────────────────────────────────────────────
@@ -76,9 +77,12 @@ async function askContinue() {
 // ── API 호출 ──────────────────────────────────────────────────────────────────
 async function apiFetch(url, { method = 'GET', token, body } = {}) {
   if (isDryRun) { dim(`[DRY RUN] ${method} ${url}`); return { ok: true, data: {} }; }
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
   const res = await fetch(url, {
     method,
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
   const text = await res.text();
@@ -89,7 +93,7 @@ async function apiFetch(url, { method = 'GET', token, body } = {}) {
 
 // ── 메인 ──────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log(`\n${C.bold}${C.green}━━━ 미니홈피 셋업 스크립트 ━━━${C.reset}`);
+  console.log(`\n${C.bold}${C.green}━━━ 분산 미니홈피 자동 셋업 (minihompy-setup) ━━━${C.reset}`);
   if (isDryRun) console.log(`${C.yellow}⚠ DRY RUN 모드: 실제 API 호출과 파일 변경 없이 흐름만 확인합니다.${C.reset}`);
 
   // ── Step 1: 정보 수집 ──────────────────────────────────────────────────────
@@ -98,7 +102,7 @@ async function main() {
 
   const github = {
     username: (await ask('  GitHub Username: ')).trim(),
-    repo:     (await ask('  GitHub 저장소 이름 (fork한 repo): ')).trim(),
+    repo:     (await ask('  GitHub 저장소 이름 (fork한 repo, 기본값: minihompy): ')).trim() || 'minihompy',
     pat:      await askSecret('  GitHub Personal Access Token: '),
   };
 
@@ -117,35 +121,69 @@ async function main() {
   const displayName = (await ask('  미니홈피 표시 이름 (한글 가능): ')).trim();
 
   const centralEnabled = (await ask('  중앙 연동을 사용하시겠습니까? (y/n): ')).toLowerCase() === 'y';
-  let central = { enabled: false, siteId: '', apiUrl: '', pageUrl: '' };
+  let central = { enabled: false, siteId: '', apiUrl: '', pageUrl: '', handle: '' };
   if (centralEnabled) {
     central.apiUrl  = (await ask('  중앙 API URL: ')).trim().replace(/\/$/, '');
     central.pageUrl = (await ask('  중앙 Page URL: ')).trim().replace(/\/$/, '');
-    central.siteId  = (await ask("  Site ID ('auto' 입력 시 자동 발급): ")).trim();
+    central.siteId  = (await ask("  Site ID ('auto' 입력 시 오픈 등록으로 자동 발급): ")).trim();
+    if (central.siteId.toLowerCase() === 'auto') {
+      central.handle = (await ask(`  중앙 공통 Handle (기본값: ${github.username.toLowerCase()}): `)).trim().toLowerCase() || github.username.toLowerCase();
+    }
     central.enabled = true;
+  }
+
+  // ── Step 1.5: 대상 미니홈피 디렉토리 판별 ─────────────────────────────────
+  let targetDir = process.cwd();
+  if (!fs.existsSync(path.join(targetDir, 'supabase-config.js'))) {
+    const scriptParent = path.resolve(__dirname, '..');
+    if (fs.existsSync(path.join(scriptParent, 'supabase-config.js'))) {
+      targetDir = scriptParent;
+    } else {
+      console.log(`\n${C.yellow}현재 디렉토리에 미니홈피 프로젝트가 없습니다.${C.reset}`);
+      const cloneAnswer = await ask(`  현재 폴더에 저장소(https://github.com/${github.username}/${github.repo})를 클론할까요? (y/n): `);
+      if (cloneAnswer.toLowerCase() === 'y') {
+        const cloneUrl = `https://${github.username}:${github.pat}@github.com/${github.username}/${github.repo}.git`;
+        try {
+          execSync(`git clone "${cloneUrl}" "${github.repo}"`, { cwd: targetDir, stdio: 'inherit' });
+          targetDir = path.join(targetDir, github.repo);
+          ok(`저장소 클론 완료: ${targetDir}`);
+        } catch (cloneErr) {
+          err(`클론 실패: ${cloneErr.message}`);
+          await askContinue();
+        }
+      }
+    }
   }
 
   // ── Step 2: SQL 마이그레이션 ───────────────────────────────────────────────
   hdr('Step 2 / 7  —  Supabase 마이그레이션 적용');
-  const migrDir = path.join(rootDir, 'supabase', 'migrations');
-  const sqlFiles = fs.readdirSync(migrDir).filter(f => f.endsWith('.sql')).sort();
-
-  for (const file of sqlFiles) {
-    process.stdout.write(`  ${file} ... `);
-    const sql = fs.readFileSync(path.join(migrDir, file), 'utf8');
-    const r = await apiFetch(
-      `https://api.supabase.com/v1/projects/${sb.ref}/database/query`,
-      { method: 'POST', token: sb.token, body: { query: sql } }
-    );
-    if (r.ok) {
-      process.stdout.write(`${C.green}완료${C.reset}\n`);
-    } else {
-      process.stdout.write(`${C.yellow}경고 (${r.status})${C.reset}\n`);
-      dim(`  → ${JSON.stringify(r.data).slice(0, 120)}`);
-      dim('  이미 적용된 마이그레이션일 수 있습니다. 계속합니다.');
-    }
+  let migrDir = path.join(__dirname, '..', 'supabase', 'migrations');
+  if (!fs.existsSync(migrDir)) {
+    migrDir = path.join(targetDir, 'supabase', 'migrations');
   }
-  ok('마이그레이션 단계 완료');
+
+  if (fs.existsSync(migrDir)) {
+    const sqlFiles = fs.readdirSync(migrDir).filter(f => f.endsWith('.sql')).sort();
+    for (const file of sqlFiles) {
+      process.stdout.write(`  ${file} ... `);
+      const sql = fs.readFileSync(path.join(migrDir, file), 'utf8');
+      const r = await apiFetch(
+        `https://api.supabase.com/v1/projects/${sb.ref}/database/query`,
+        { method: 'POST', token: sb.token, body: { query: sql } }
+      );
+      if (r.ok) {
+        process.stdout.write(`${C.green}완료${C.reset}\n`);
+      } else {
+        process.stdout.write(`${C.yellow}경고 (${r.status})${C.reset}\n`);
+        dim(`  → ${JSON.stringify(r.data).slice(0, 120)}`);
+        dim('  이미 적용된 마이그레이션일 수 있습니다. 계속합니다.');
+      }
+    }
+    ok('마이그레이션 단계 완료');
+  } else {
+    err(`마이그레이션 폴더를 찾을 수 없습니다: ${migrDir}`);
+    await askContinue();
+  }
 
   // ── Step 3: 관리자 계정 생성 ───────────────────────────────────────────────
   hdr('Step 3 / 7  —  관리자 계정 생성');
@@ -159,24 +197,25 @@ async function main() {
     adminUuid = createRes.data.id;
     ok(`관리자 계정 생성 완료 (UUID: ${adminUuid})`);
   } else {
-    err(`관리자 계정 생성 실패: ${JSON.stringify(createRes.data).slice(0, 120)}`);
-    dim('이미 존재하는 이메일이거나 API 오류일 수 있습니다.');
-    dim('이 경우 Supabase 대시보드 Authentication → Users에서 UUID를 직접 확인하세요.');
-    adminUuid = (await ask('  관리자 UUID를 직접 입력하세요 (건너뛰려면 Enter): ')).trim() || adminUuid;
-    await askContinue();
+    err(`관리자 계정 생성 실패 (${createRes.status}): ${JSON.stringify(createRes.data)}`);
+    dim('이미 계정이 존재한다면 Supabase 대시보드 Authentication → Users 에서 UUID를 복사해 입력하세요.');
+    adminUuid = (await ask('  관리자 User UUID (직접 입력 또는 건너뛰기 Enter): ')).trim();
+    if (!adminUuid) await askContinue();
   }
 
-  // ── Step 4: 관리자 UUID DB 등록 ────────────────────────────────────────────
-  hdr('Step 4 / 7  —  관리자 권한 DB 등록');
-  const insertRes = await apiFetch(
-    `https://api.supabase.com/v1/projects/${sb.ref}/database/query`,
-    { method: 'POST', token: sb.token,
-      body: { query: `INSERT INTO private.minihompy_admins (user_id) VALUES ('${adminUuid}') ON CONFLICT DO NOTHING;` } }
-  );
-  if (insertRes.ok) { ok('관리자 UUID 등록 완료'); }
-  else {
-    err(`등록 실패: ${JSON.stringify(insertRes.data).slice(0, 120)}`);
-    await askContinue();
+  // ── Step 4: 관리자 UUID 권한 등록 ─────────────────────────────────────────
+  if (adminUuid) {
+    hdr('Step 4 / 7  —  private.minihompy_admins 권한 등록');
+    const adminSql = `INSERT INTO private.minihompy_admins (user_id) VALUES ('${adminUuid}') ON CONFLICT (user_id) DO NOTHING;`;
+    const permRes = await apiFetch(
+      `https://api.supabase.com/v1/projects/${sb.ref}/database/query`,
+      { method: 'POST', token: sb.token, body: { query: adminSql } }
+    );
+    if (permRes.ok) { ok('관리자 권한 등록 완료'); }
+    else {
+      err(`권한 등록 실패: ${JSON.stringify(permRes.data)}`);
+      await askContinue();
+    }
   }
 
   // ── Step 5: 익명 인증 활성화 ───────────────────────────────────────────────
@@ -194,22 +233,24 @@ async function main() {
 
   // ── Step 6a: 중앙 siteId 자동 발급 (optional) ─────────────────────────────
   if (central.enabled && central.siteId.toLowerCase() === 'auto') {
-    hdr('Step 6a / 7  —  중앙 허브 siteId 발급');
+    hdr('Step 6a / 7  —  중앙 허브 siteId 오픈 등록 및 자동 발급');
     const regRes = await apiFetch(`${central.apiUrl}/sites`, {
       method: 'POST',
-      token: '',   // 중앙 API 인증 방식은 추후 확정; 현재는 public endpoint 가정
       body: {
+        handle: central.handle || github.username.toLowerCase(),
+        display_name: displayName || github.username,
         origin: `https://${github.username}.github.io`,
         base_path: `/${github.repo}/`,
         homepage_url: `https://${github.username}.github.io/${github.repo}/`,
         login_url: `https://${github.username}.github.io/${github.repo}/?login_intent=`,
+        supabase_project_ref: sb.ref,
       },
     });
     if (regRes.ok && regRes.data?.site_id) {
       central.siteId = regRes.data.site_id;
       ok(`siteId 발급 완료: ${central.siteId}`);
     } else {
-      err('siteId 자동 발급 실패. 중앙 허브가 아직 운영 중이 아닐 수 있습니다.');
+      err(`siteId 자동 발급 실패 (${regRes.status}): ${regRes.data?.error || JSON.stringify(regRes.data)}`);
       central.siteId = (await ask('  siteId를 직접 입력하거나 Enter로 건너뛰기: ')).trim();
       if (!central.siteId) { central.enabled = false; dim('중앙 연동을 비활성화합니다.'); }
     }
@@ -218,15 +259,16 @@ async function main() {
   // ── Step 6b: 설정 파일 생성 ────────────────────────────────────────────────
   hdr('Step 6 / 7  —  설정 파일 생성');
 
-  // supabase-config.js — 실제 런타임 포맷 유지
-  const supabaseConfigJs = `// Public browser connection settings. Never put secret/service_role keys here.
-window.MINIHOMPY_SUPABASE = Object.freeze({
-  url: '${sb.url}',
-  publishableKey: '${sb.anonKey}',
-});
+  const supabaseConfigJs = `// Runtime client connection only. Never put secret/service_role keys in this file.
+(() => {
+  'use strict';
+  window.MINIHOMPY_SUPABASE = Object.freeze({
+    url: '${sb.url}',
+    publishableKey: '${sb.anonKey}',
+  });
+})();
 `;
 
-  // visitor-identity-config.js — 실제 런타임 포맷 유지
   const visitorConfigJs = central.enabled
     ? `(() => {
   'use strict';
@@ -266,10 +308,10 @@ window.MINIHOMPY_SUPABASE = Object.freeze({
 `;
 
   if (!isDryRun) {
-    fs.writeFileSync(path.join(rootDir, 'supabase-config.js'), supabaseConfigJs);
-    ok('supabase-config.js 작성 완료');
-    fs.writeFileSync(path.join(rootDir, 'visitor-identity-config.js'), visitorConfigJs);
-    ok('visitor-identity-config.js 작성 완료');
+    fs.writeFileSync(path.join(targetDir, 'supabase-config.js'), supabaseConfigJs);
+    ok(`supabase-config.js 작성 완료 (${path.join(targetDir, 'supabase-config.js')})`);
+    fs.writeFileSync(path.join(targetDir, 'visitor-identity-config.js'), visitorConfigJs);
+    ok(`visitor-identity-config.js 작성 완료 (${path.join(targetDir, 'visitor-identity-config.js')})`);
   } else {
     dim('[DRY RUN] supabase-config.js, visitor-identity-config.js 작성 건너뜀');
   }
@@ -279,12 +321,12 @@ window.MINIHOMPY_SUPABASE = Object.freeze({
   if (!isDryRun) {
     try {
       const remote = `https://${github.username}:${github.pat}@github.com/${github.username}/${github.repo}.git`;
-      execSync('git add supabase-config.js visitor-identity-config.js', { cwd: rootDir, stdio: 'pipe' });
-      execSync('git commit -m "Setup: configure Supabase connection and identity settings"', { cwd: rootDir, stdio: 'pipe' });
-      execSync(`git remote set-url origin "${remote}"`, { cwd: rootDir, stdio: 'pipe' });
-      execSync('git push origin main', { cwd: rootDir, stdio: 'inherit' });
+      execSync('git add supabase-config.js visitor-identity-config.js', { cwd: targetDir, stdio: 'pipe' });
+      execSync('git commit -m "Setup: configure Supabase connection and identity settings"', { cwd: targetDir, stdio: 'pipe' });
+      execSync(`git remote set-url origin "${remote}"`, { cwd: targetDir, stdio: 'pipe' });
+      execSync('git push origin main', { cwd: targetDir, stdio: 'inherit' });
       // 보안: remote URL을 PAT 없는 버전으로 복원
-      execSync(`git remote set-url origin "https://github.com/${github.username}/${github.repo}.git"`, { cwd: rootDir, stdio: 'pipe' });
+      execSync(`git remote set-url origin "https://github.com/${github.username}/${github.repo}.git"`, { cwd: targetDir, stdio: 'pipe' });
       ok('Git push 완료 및 remote URL 복원');
     } catch (e) {
       err(`Git 명령 실패: ${e.message}`);
