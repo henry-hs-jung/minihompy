@@ -7,10 +7,11 @@
     enabled: true,
 
     // 중앙 식별 허브에 등록된 이 미니홈피의 고유 UUID
-    siteId: '00000000-0000-0000-0000-000000000001',
+    siteId: 'afd287c3-0f9f-44b4-8811-3cf11774f859',
 
-    // 중앙 식별 서비스 기본 URL (Supabase Edge Function 배포 주소 또는 로컬 개발 주소)
-    centralUrl: 'http://localhost:54321/functions/v1',
+    // 중앙 식별 서비스 기본 URL (API 및 Page 각각 설정)
+    centralApiUrl: 'https://pcwovvdgggpbghvqraex.supabase.co/functions/v1/identity-api',
+    centralPageUrl: 'https://pcwovvdgggpbghvqraex.supabase.co/functions/v1/identity-page',
 
     // 중앙 상태 확인(/health) 타임아웃 제한 (스펙 권장: 1.5초)
     healthTimeoutMs: 1500,
