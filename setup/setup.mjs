@@ -12,6 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import readline from 'node:readline';
 import { execSync } from 'node:child_process';
+import { Writable } from 'node:stream';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
@@ -31,47 +32,53 @@ const hdr = (m) => console.log(`\n${C.cyan}${C.bold}▶ ${m}${C.reset}`);
 const dim = (m) => console.log(`${C.yellow}  ${m}${C.reset}`);
 
 // ── readline 헬퍼 ─────────────────────────────────────────────────────────────
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-const ask = (q) => new Promise((res) => rl.question(q, res));
-
-/** 입력 중 문자를 '*' 로 치환해 터미널에 표시 */
-function askSecret(prompt) {
+function ask(question) {
+  process.stdin.resume();
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   return new Promise((resolve) => {
-    process.stdout.write(prompt);
-    const stdin = process.openStdin();
-    let value = '';
-    process.stdin.setRawMode(true);
-    process.stdin.resume();
-    process.stdin.setEncoding('utf8');
-    const onData = (ch) => {
-      if (ch === '\n' || ch === '\r' || ch === '\u0004') {
-        process.stdin.setRawMode(false);
-        process.stdin.pause();
-        process.stdin.removeListener('data', onData);
-        process.stdout.write('\n');
-        resolve(value);
-      } else if (ch === '\u0003') {
-        process.exit();
-      } else if (ch === '\u007f') {
-        // backspace
-        if (value.length > 0) {
-          value = value.slice(0, -1);
-          process.stdout.clearLine(0);
-          process.stdout.cursorTo(0);
-          process.stdout.write(prompt + '*'.repeat(value.length));
+    rl.question(question, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
+}
+
+/** 비밀번호/토큰 마스킹 입력 (터미널 노출 완전 차단 및 stdin 스트림 유지) */
+function askSecret(question) {
+  process.stdin.resume();
+  return new Promise((resolve) => {
+    let muted = false;
+    const output = new Writable({
+      write(chunk, encoding, callback) {
+        if (!muted) {
+          process.stdout.write(chunk, encoding);
         }
-      } else {
-        value += ch;
-        process.stdout.write('*');
-      }
-    };
-    process.stdin.on('data', onData);
+        callback();
+      },
+    });
+
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: output,
+      terminal: true,
+    });
+
+    rl.question(question, (answer) => {
+      rl.close();
+      process.stdout.write('\n');
+      resolve(answer);
+    });
+
+    muted = true;
   });
 }
 
 async function askContinue() {
   const a = await ask(`${C.yellow}이 단계를 건너뛰고 계속 진행하시겠습니까? (y/n): ${C.reset}`);
-  if (a.toLowerCase() !== 'y') { console.log('스크립트를 중단합니다.'); rl.close(); process.exit(1); }
+  if (a.toLowerCase() !== 'y') {
+    console.log('스크립트를 중단합니다.');
+    process.exit(1);
+  }
 }
 
 // ── API 호출 ──────────────────────────────────────────────────────────────────
@@ -349,12 +356,9 @@ async function main() {
   }
   console.log(`\n${C.yellow}  ⚠ GitHub Pages Actions 탭에서 배포 상태를 확인하세요.${C.reset}`);
   console.log(`     https://github.com/${github.username}/${github.repo}/actions\n`);
-
-  rl.close();
 }
 
 main().catch((e) => {
   console.error(`\n${C.red}치명적 오류: ${e.message}${C.reset}`);
-  rl.close();
   process.exit(1);
 });
