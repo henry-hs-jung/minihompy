@@ -2,21 +2,19 @@
   'use strict';
   const client = window.MinihompyBackend.getClient('admin');
   const identity = window.createMinihompyIdentity(client);
-  const toggle = document.querySelector('#admin-auth-toggle');
-  const dialog = document.querySelector('.admin-dialog');
-  const form = document.querySelector('#admin-login-form');
-  const email = document.querySelector('#admin-email');
-  const password = document.querySelector('#admin-password');
-  const message = document.querySelector('.admin-auth-message');
-  const submit = document.querySelector('#admin-submit');
-  const close = document.querySelector('#admin-close');
+  const toggle = document.querySelector('#login-auth-toggle');
+  const dialog = document.querySelector('.login-dialog');
+  const form = document.querySelector('#login-form');
+  const email = document.querySelector('#login-email');
+  const password = document.querySelector('#login-password');
+  const message = document.querySelector('.login-auth-message');
+  const submit = document.querySelector('#login-submit');
+  const close = document.querySelector('#login-close');
   let state = Object.freeze({ role: 'reader', userId: null });
   let busy = false;
   let generation = 0;
   function publish(next) {
     state = Object.freeze({ role: next.role === 'admin' ? 'admin' : 'reader', userId: next.role === 'admin' ? next.userId : null });
-    toggle.textContent = state.role === 'admin' ? '로그아웃' : '관리자';
-    toggle.title = state.role === 'admin' ? '관리자 로그아웃' : '관리자 로그인';
     document.documentElement.dataset.identity = state.role;
     window.dispatchEvent(new CustomEvent('minihompy:identity', { detail: state }));
   }
@@ -38,6 +36,7 @@
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (busy) return;
+
     ++generation;
     setBusy(true);
     message.textContent = '확인 중입니다.';
@@ -58,12 +57,6 @@
       publish(verified);
       dialog.close();
 
-      // 중앙 방문자 식별이 활성화되어 있다면 백그라운드로 중앙 세션 자동 연동 시도
-      try {
-        await linkAdminCentralSession(verified.userId);
-      } catch (centralErr) {
-        console.warn('[admin-auth] 중앙 식별 자동 연동 실패 (무시):', centralErr);
-      }
     } catch {
       publish({ role: 'reader' });
       message.textContent = '관리자 권한을 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.';
@@ -73,81 +66,43 @@
     }
   });
 
-  async function linkAdminCentralSession(localUserId) {
+  function openLogin() {
     const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
-    if (!config || config.enabled === false || !config.siteId) return;
-
-    const { siteId, centralUrl, centralApiUrl = centralUrl, centralPageUrl = centralUrl } = config;
-    if (!centralApiUrl || !centralPageUrl) return;
-
-    // 1. 이미 중앙 세션으로 본인 식별이 되어 있는지 확인
-    const sharedState = window.MinihompySharedIdentity?.state;
-    if (sharedState?.status === 'identified' && sharedState?.visitor?.id) {
-      // 이미 중앙 방문자 식별 완료 상태이면 불필요한 왕복을 건너뜁니다
-      return;
+    if (config?.enabled) {
+      const clean = new URL(location.href);
+      if (clean.searchParams.get('admin') === 'login') {
+        clean.searchParams.delete('admin');
+        history.replaceState(null, '', clean.pathname + clean.search + clean.hash);
+      }
+      try { location.assign(window.MinihompySharedIdentity.getLoginUrl()); }
+      catch { message.textContent = '로그인을 위해 브라우저 저장소 사용을 허용해 주세요.'; dialog.showModal(); form.hidden = true; }
+    } else {
+      dialog.showModal(); email.focus();
     }
-
-    // 2. 관리자 본인의 siteId로 login_intent 발급 요청
-    const currentPath = location.pathname + location.search + (location.hash || '#/home');
-    const intentRes = await fetch(`${centralApiUrl}/login-intents`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        site_id: siteId,
-        return_site_id: siteId,
-        return_path: currentPath,
-      }),
-      mode: 'cors',
-    });
-
-    if (!intentRes.ok) {
-      console.warn('[admin-auth] 중앙 login_intent 발급 실패 (건너뜀):', intentRes.status);
-      return;
-    }
-
-    const intentData = await intentRes.json().catch(() => ({}));
-    const loginIntent = intentData?.login_intent;
-    if (!loginIntent) return;
-
-    // 3. 발급받은 login_intent와 localUserId로 activation_ticket 발급
-    const ticketRes = await fetch(`${centralApiUrl}/activation-tickets`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        login_intent: loginIntent,
-        site_id: siteId,
-        local_user_id: localUserId,
-      }),
-      mode: 'cors',
-    });
-
-    if (!ticketRes.ok) {
-      console.warn('[admin-auth] 중앙 activation-ticket 발급 실패 (건너뜀):', ticketRes.status);
-      return;
-    }
-
-    const ticketData = await ticketRes.json().catch(() => ({}));
-    const ticket = ticketData?.activation_ticket;
-    if (!ticket) return;
-
-    // 4. 중앙 /complete 로 이동하여 중앙 세션 등록 후 자동 복귀
-    const completeUrl = `${centralPageUrl}/complete#ticket=${encodeURIComponent(ticket)}`;
-    location.replace(completeUrl);
   }
-  toggle.addEventListener('click', async () => {
+  toggle.addEventListener('click', async (e) => {
     if (busy) return;
     message.textContent = '';
-    if (state.role !== 'admin') {
-      dialog.showModal();
-      email.focus();
+    
+    const sharedState = window.MinihompySharedIdentity?.state;
+    const isVisitor = state.role !== 'admin' && sharedState?.status === 'identified' && sharedState?.visitor;
+    
+    if (isVisitor) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      try { location.assign(window.MinihompySharedIdentity.getLogoutUrl()); }
+      catch { message.textContent = '로그아웃을 위해 브라우저 저장소 사용을 허용해 주세요.'; dialog.showModal(); form.hidden = true; }
       return;
     }
+
+    if (state.role !== 'admin') { openLogin(); return; }
     ++generation;
     setBusy(true);
     publish({ role: 'reader' });
     try {
       const { error } = await client.auth.signOut({ scope: 'local' });
       if (error) throw error;
+      if (window.MINIHOMPY_VISITOR_IDENTITY_CONFIG?.enabled) location.assign(window.MinihompySharedIdentity.getLogoutUrl());
     } catch {
       message.textContent = '로그아웃을 완료하지 못했습니다. 연결 상태를 확인한 뒤 다시 시도해 주세요.';
       await refresh();
@@ -163,17 +118,18 @@
     else if (!busy) setTimeout(() => { if (!busy) void refresh(); }, 0);
   });
   window.addEventListener('online', () => { if (!busy) void refresh(); });
-  window.MinihompyAdmin = Object.freeze({ get state() { return state; }, refresh });
+  window.MinihompyAdmin = Object.freeze({
+    get state() { return state; },
+    refresh,
+    openLogin,
+  });
   void refresh();
 
-  // URL 쿼리 파라미터 ?admin=login 감지 시 관리자 로그인 창 자동 오픈
+  // URL 쿼리 파라미터 ?admin=login 감지 시 로그인 창 자동 오픈
   try {
     if (new URLSearchParams(location.search).get('admin') === 'login') {
       setTimeout(() => {
-        if (state.role !== 'admin') {
-          dialog.showModal();
-          email.focus();
-        }
+        if (state.role !== 'admin') openLogin();
       }, 0);
     }
   } catch { /* Ignore URL parsing errors */ }
